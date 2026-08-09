@@ -290,41 +290,193 @@ body::before{
 .submit-btn:hover:not(:disabled){box-shadow:0 10px 30px rgba(229,0,36,.4);transform:translateY(-2px)}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed;background:rgba(255,255,255,.1);color:var(--text-muted)}
 
-/* LOADING OVERLAY (PREMIUM) */
-.loading-overlay{visibility:hidden;opacity:0;position:fixed;inset:0;background:rgba(10,10,15,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column;padding:20px;overflow:hidden;transition:opacity .4s ease,visibility .4s ease}
+/* ================================================== */
+/* PREMIUM FULL SCREEN LOADING (3 MENIT)              */
+/* ================================================== */
+.loading-overlay{
+    visibility:hidden;
+    opacity:0;
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at center, #14141f, #05050a);
+    backdrop-filter:blur(30px);
+    -webkit-backdrop-filter:blur(30px);
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:20px;
+    overflow:hidden;
+    transition:opacity .8s ease,visibility .8s ease;
+}
 .loading-overlay.active{visibility:visible;opacity:1}
-.loading-overlay::before,.loading-overlay::after{content:'';position:absolute;border-radius:50%;filter:blur(100px);opacity:.15;pointer-events:none}
-.loading-overlay::before{width:500px;height:500px;background:var(--accent-red);top:-150px;left:-150px;animation:blobMove 8s ease-in-out infinite}
-.loading-overlay::after{width:400px;height:400px;background:var(--accent-gold);bottom:-100px;right:-100px;animation:blobMove 10s ease-in-out infinite reverse}
-@keyframes blobMove{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(50px,50px) scale(1.2)}}
 
-.loading-content{position:relative;z-index:2;text-align:center;max-width:440px;width:100%;background:var(--gradient-card);padding:36px 28px;border-radius:var(--radius-lg);box-shadow:0 20px 60px rgba(0,0,0,.5);border:1px solid var(--border);backdrop-filter:blur(10px)}
-.progress-ring-wrap{position:relative;width:160px;height:160px;margin:0 auto 32px}
+/* Ambient Background Orbs */
+.loading-overlay::before,.loading-overlay::after{
+    content:'';
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:0.2;
+    pointer-events:none;
+}
+.loading-overlay::before{
+    width:600px;height:600px;
+    background:var(--accent-red);
+    top:-200px;left:-200px;
+    animation:blobMove 12s ease-in-out infinite;
+}
+.loading-overlay::after{
+    width:500px;height:500px;
+    background:var(--accent-gold);
+    bottom:-150px;right:-150px;
+    animation:blobMove 14s ease-in-out infinite reverse;
+}
+@keyframes blobMove{
+    0%,100%{transform:translate(0,0) scale(1)}
+    50%{transform:translate(80px,80px) scale(1.3)}
+}
+
+/* Floating Loading Content Box */
+.loading-content{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    max-width:480px;
+    width:100%;
+    background:rgba(20,20,30,0.7);
+    padding:40px 32px;
+    border-radius:var(--radius-lg);
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    animation:floatBox 6s ease-in-out infinite;
+}
+@keyframes floatBox{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+
+/* Progress Ring */
+.progress-ring-wrap{position:relative;width:180px;height:180px;margin:0 auto 36px}
 .progress-ring{transform:rotate(-90deg);width:100%;height:100%}
-.progress-ring-bg{fill:none;stroke:rgba(255,255,255,.05);stroke-width:8}
-.progress-ring-fill{fill:none;stroke:url(#gradStroke);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .3s linear;filter:drop-shadow(0 0 10px rgba(245,184,0,.5))}
+.progress-ring-bg{fill:none;stroke:rgba(255,255,255,0.05);stroke-width:6}
+.progress-ring-fill{
+    fill:none;
+    stroke:url(#gradStroke);
+    stroke-width:6;
+    stroke-linecap:round;
+    transition:stroke-dashoffset .3s linear;
+    filter:drop-shadow(0 0 12px rgba(245,184,0,0.6));
+}
 .progress-percent{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.progress-percent .num{font-size:2.8rem;font-weight:800;color:#fff;line-height:1;font-family:'Sora',sans-serif}
-.progress-percent .pct{font-size:1rem;font-weight:700;color:var(--accent-gold);margin-top:4px}
-.progress-icon{position:absolute;top:-15px;left:50%;transform:translateX(-50%);width:44px;height:44px;border-radius:50%;background:var(--gradient-red);display:flex;align-items:center;justify-content:center;box-shadow:0 5px 15px rgba(229,0,36,.5);z-index:3}
-.progress-icon i{color:#fff;font-size:18px;animation:iconSpin 2s linear infinite}
+.progress-percent .num{
+    font-size:3.5rem;
+    font-weight:800;
+    color:#fff;
+    line-height:1;
+    font-family:'Sora',sans-serif;
+    text-shadow:0 4px 20px rgba(245,184,0,0.3);
+}
+.progress-percent .pct{font-size:1.2rem;font-weight:700;color:var(--accent-gold);margin-top:4px}
+
+.progress-icon{
+    position:absolute;
+    top:-20px;left:50%;
+    transform:translateX(-50%);
+    width:56px;height:56px;
+    border-radius:50%;
+    background:var(--gradient-red);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(229,0,36,0.6);
+    z-index:3;
+    border:3px solid #14141f;
+}
+.progress-icon i{color:#fff;font-size:22px;animation:iconSpin 3s linear infinite}
+
 @keyframes iconSpin{to{transform:rotate(360deg)}}
 
-.loading-title{font-size:1.5rem;font-weight:800;margin-bottom:8px;color:#fff;font-family:'Sora',sans-serif}
-.loading-subtitle{font-size:.9rem;color:var(--text-muted);margin-bottom:28px;min-height:20px}
-.loading-steps{display:flex;flex-direction:column;gap:10px;text-align:left;margin-top:8px}
-.step-item{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:var(--radius);background:rgba(255,255,255,.02);border:1px solid var(--border);opacity:.4;transition:all .4s ease}
-.step-item.active{opacity:1;background:rgba(245,184,0,.05);border-color:rgba(245,184,0,.3);transform:translateX(4px)}
-.step-item.done{opacity:1;background:rgba(229,0,36,.05);border-color:rgba(229,0,36,.3)}
-.step-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;background:rgba(255,255,255,.05);color:var(--text-muted);flex-shrink:0;transition:var(--transition)}
-.step-item.active .step-icon{background:var(--gradient-gold);color:#1a1a1a;box-shadow:0 0 15px rgba(245,184,0,.4)}
-.step-item.done .step-icon{background:var(--gradient-red);color:#fff}
-.step-text{font-size:.9rem;font-weight:600;color:#fff}
-.step-item.active .step-icon i{animation:iconSpin 1.5s linear infinite}
+.loading-title{
+    font-size:1.8rem;
+    font-weight:800;
+    margin-bottom:10px;
+    color:#fff;
+    font-family:'Sora',sans-serif;
+    letter-spacing:-0.5px;
+}
+.loading-subtitle{
+    font-size:1rem;
+    color:var(--text-muted);
+    margin-bottom:32px;
+    min-height:24px;
+    font-weight:500;
+}
 
-.loading-bar-wrap{margin-top:28px;width:100%;height:8px;background:rgba(255,255,255,.05);border-radius:10px;overflow:hidden}
-.loading-bar{height:100%;width:0%;background:var(--gradient-gold);border-radius:10px;transition:width .3s linear;box-shadow:0 0 10px rgba(245,184,0,.5)}
-.loading-time{margin-top:12px;font-size:.75rem;color:var(--text-muted);font-family:monospace;letter-spacing:1px}
+/* Process Steps List */
+.loading-steps{display:flex;flex-direction:column;gap:12px;text-align:left;margin-top:8px;max-height:280px;overflow:hidden}
+.step-item{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:14px 18px;
+    border-radius:var(--radius);
+    background:rgba(255,255,255,0.02);
+    border:1px solid var(--border);
+    opacity:0.3;
+    transition:all 0.5s cubic-bezier(.4,0,.2,1);
+}
+.step-item.active{
+    opacity:1;
+    background:rgba(245,184,0,0.08);
+    border-color:rgba(245,184,0,0.3);
+    transform:translateX(6px);
+}
+.step-item.done{opacity:0.7;background:rgba(229,0,36,0.05);border-color:rgba(229,0,36,0.2)}
+.step-icon{
+    width:36px;height:36px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;
+    background:rgba(255,255,255,0.05);
+    color:var(--text-muted);
+    flex-shrink:0;
+    transition:var(--transition);
+}
+.step-item.active .step-icon{
+    background:var(--gradient-gold);
+    color:#1a1a1a;
+    box-shadow:0 0 20px rgba(245,184,0,0.4);
+}
+.step-item.done .step-icon{background:var(--gradient-red);color:#fff}
+.step-text{font-size:0.95rem;font-weight:600;color:#fff;font-family:'Plus Jakarta Sans',sans-serif}
+.step-item.active .step-icon i{animation:iconSpin 2s linear infinite}
+
+/* Bottom Loading Bar & Time */
+.loading-bar-wrap{
+    margin-top:32px;
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,0.05);
+    border-radius:10px;
+    overflow:hidden;
+}
+.loading-bar{
+    height:100%;
+    width:0%;
+    background:var(--gradient-gold);
+    border-radius:10px;
+    transition:width .3s linear;
+    box-shadow:0 0 15px rgba(245,184,0,0.6);
+}
+.loading-time{
+    margin-top:14px;
+    font-size:0.85rem;
+    color:var(--text-muted);
+    font-family:'Sora',sans-serif;
+    letter-spacing:1px;
+}
 
 /* TOAST */
 .toast{position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--gradient-red);color:#fff;padding:14px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 12px 32px rgba(229,0,36,.4);z-index:3000;opacity:0;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s ease;max-width:90vw;text-align:center}
@@ -334,7 +486,11 @@ body::before{
     .timer{font-size:2rem}
     .total-price{font-size:2.2rem}
     .detail-grid{grid-template-columns:1fr;gap:12px}
-    .loading-content{padding:28px 20px}
+    .loading-content{padding:32px 20px}
+    .progress-ring-wrap{width:150px;height:150px}
+    .progress-percent .num{font-size:2.8rem}
+    .loading-title{font-size:1.5rem}
+    .step-text{font-size:0.85rem}
 }
 </style>
 </head>
@@ -348,7 +504,7 @@ body::before{
     </div>
     <div class="logo">DewaTiket</div>
     <div class="header-right">
-        <button class="icon-btn" aria-label="Bantuan" onclick="showToast('Hubungi WhatsApp: 0812-3456-7890')">
+        <button class="icon-btn" aria-label="Bantuan" onclick="showToast('Hubungi WhatsApp: 0895-6271-08538')">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         </button>
     </div>
@@ -386,7 +542,7 @@ body::before{
     <div class="card qr-card">
         <div class="timer-box">
             <div class="timer-label">Selesaikan pembayaran dalam</div>
-            <div id="timer" class="timer">15:00</div>
+            <div id="timer" class="timer">05:00</div>
         </div>
         <div class="qr-wrap">
             <div class="qr-badge">Scan QRIS</div>
@@ -444,19 +600,20 @@ body::before{
     </div>
 </div>
 
+<!-- PREMIUM FULLSCREEN LOADING (3 Minutes / 180 Seconds) -->
 <div id="loading" class="loading-overlay">
     <div class="loading-content">
         <div class="progress-ring-wrap">
             <div class="progress-icon"><i class="fa-solid fa-credit-card"></i></div>
-            <svg class="progress-ring" viewBox="0 0 180 180">
+            <svg class="progress-ring" viewBox="0 0 200 200">
                 <defs>
                     <linearGradient id="gradStroke" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stop-color="#e50024"/>
                         <stop offset="100%" stop-color="#f5b800"/>
                     </linearGradient>
                 </defs>
-                <circle class="progress-ring-bg" cx="90" cy="90" r="80"></circle>
-                <circle id="progressCircle" class="progress-ring-fill" cx="90" cy="90" r="80"></circle>
+                <circle class="progress-ring-bg" cx="100" cy="100" r="90"></circle>
+                <circle id="progressCircle" class="progress-ring-fill" cx="100" cy="100" r="90"></circle>
             </svg>
             <div class="progress-percent">
                 <div class="num" id="progressNum">0</div>
@@ -464,16 +621,23 @@ body::before{
             </div>
         </div>
         <div class="loading-title">Memproses Pembayaran</div>
-        <div class="loading-subtitle" id="loadingSubtitle">Mohon tunggu, jangan tutup halaman ini...</div>
+        <div class="loading-subtitle" id="loadingSubtitle">Memulai proses verifikasi...</div>
+        
         <div class="loading-steps">
-            <div class="step-item" data-step="0"><div class="step-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="step-text">Verifikasi keamanan transaksi</div></div>
-            <div class="step-item" data-step="1"><div class="step-icon"><i class="fa-solid fa-image"></i></div><div class="step-text">Validasi bukti pembayaran</div></div>
-            <div class="step-item" data-step="2"><div class="step-icon"><i class="fa-solid fa-building-columns"></i></div><div class="step-text">Konfirmasi ke sistem bank</div></div>
-            <div class="step-item" data-step="3"><div class="step-icon"><i class="fa-solid fa-ticket"></i></div><div class="step-text">Penerbitan e-tiket</div></div>
-            <div class="step-item" data-step="4"><div class="step-icon"><i class="fa-solid fa-circle-check"></i></div><div class="step-text">Finalisasi pesanan</div></div>
+            <div class="step-item" data-step="0"><div class="step-icon"><i class="fa-solid fa-plug"></i></div><div class="step-text">Menginisialisasi sistem</div></div>
+            <div class="step-item" data-step="1"><div class="step-icon"><i class="fa-solid fa-network-wired"></i></div><div class="step-text">Menghubungkan ke gateway pembayaran</div></div>
+            <div class="step-item" data-step="2"><div class="step-icon"><i class="fa-solid fa-magnifying-glass"></i></div><div class="step-text">Menganalisis bukti transfer</div></div>
+            <div class="step-item" data-step="3"><div class="step-icon"><i class="fa-solid fa-download"></i></div><div class="step-text">Mengunduh data transaksi QRIS</div></div>
+            <div class="step-item" data-step="4"><div class="step-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="step-text">Memvalidasi keaslian transaksi</div></div>
+            <div class="step-item" data-step="5"><div class="step-icon"><i class="fa-solid fa-lock"></i></div><div class="step-text">Melakukan enkripsi data pengguna</div></div>
+            <div class="step-item" data-step="6"><div class="step-icon"><i class="fa-solid fa-building-columns"></i></div><div class="step-text">Menghubungi server bank</div></div>
+            <div class="step-item" data-step="7"><div class="step-icon"><i class="fa-solid fa-money-check-dollar"></i></div><div class="step-text">Memverifikasi nominal transfer</div></div>
+            <div class="step-item" data-step="8"><div class="step-icon"><i class="fa-solid fa-ticket"></i></div><div class="step-text">Mencetak e-tiket digital</div></div>
+            <div class="step-item" data-step="9"><div class="step-icon"><i class="fa-solid fa-circle-check"></i></div><div class="step-text">Finalisasi pesanan Anda</div></div>
         </div>
+
         <div class="loading-bar-wrap"><div class="loading-bar" id="loadingBar"></div></div>
-        <div class="loading-time" id="loadingTime">00:00 / 00:08</div>
+        <div class="loading-time" id="loadingTime">00:00 / 03:00</div>
     </div>
 </div>
 
@@ -547,9 +711,9 @@ function copyAmount() {
 }
 
 // ═══════════════════════════════════════════════
-// TIMER COUNTDOWN (15 minutes)
+// TIMER COUNTDOWN (5 minutes = 300 seconds)
 // ═══════════════════════════════════════════════
-let duration = 900;
+let duration = 300; 
 let timerEl = document.getElementById('timer');
 let timerInterval = null;
 let isProcessing = false;
@@ -576,7 +740,6 @@ let cekInput = document.getElementById('cek');
 let btn = document.getElementById('btn');
 let previewImg = document.getElementById('previewImg');
 
-// Fungsi untuk mengecek apakah tombol harus aktif atau tidak
 function checkButton() { 
     btn.disabled = !(uploaded && cekInput.checked); 
 }
@@ -647,9 +810,9 @@ async function sendEmailNotification(orderData, orderId) {
 }
 
 // ═══════════════════════════════════════════════
-// PREMIUM LOADING (8 seconds) & REDIRECT
+// PREMIUM LOADING (3 minutes = 180000 ms) & REDIRECT
 // ═══════════════════════════════════════════════
-let LOADING_DURATION = 8000;
+let LOADING_DURATION = 180000; // 3 menit dalam milidetik
 let loadingOverlay = document.getElementById('loading');
 let progressCircle = document.getElementById('progressCircle');
 let progressNum = document.getElementById('progressNum');
@@ -657,17 +820,21 @@ let loadingBar = document.getElementById('loadingBar');
 let loadingTime = document.getElementById('loadingTime');
 let loadingSubtitle = document.getElementById('loadingSubtitle');
 
-let CIRCUMFERENCE = 2 * Math.PI * 80;
+let CIRCUMFERENCE = 2 * Math.PI * 90; // r=90 untuk viewBox 200x200
 progressCircle.style.strokeDasharray = CIRCUMFERENCE;
 progressCircle.style.strokeDashoffset = CIRCUMFERENCE;
 
 let subtitles = [
-    'Sedang memverifikasi data pembayaran Anda...',
-    'Menghubungkan ke server bank...',
-    'Memvalidasi bukti transfer QRIS...',
-    'Memproses transaksi keamanan...',
-    'Menerbitkan e-tiket Anda...',
-    'Hampir selesai, mohon tunggu...'
+    'Memulai proses verifikasi keamanan...',
+    'Menghubungkan ke gateway pembayaran QRIS...',
+    'Sedang menganalisis bukti transfer Anda...',
+    'Mengunduh data transaksi dari server...',
+    'Memvalidasi keaslian transaksi QRIS...',
+    'Melakukan enkripsi data pengguna...',
+    'Menghubungi server bank untuk verifikasi...',
+    'Memverifikasi kesesuaian nominal transfer...',
+    'Mencetak e-tiket digital Anda...',
+    'Menyelesaikan transaksi, mohon tunggu...'
 ];
 let stepElements = document.querySelectorAll('.step-item');
 
@@ -723,7 +890,7 @@ function startPremiumLoading() {
             loadingBar.style.width = '100%';
             loadingSubtitle.textContent = 'Pembayaran berhasil dikonfirmasi!';
             // REDIRECT KE pending.html
-            setTimeout(function() { window.location.href = 'pending.html'; }, 1000);
+            setTimeout(function() { window.location.href = 'pending.html'; }, 1500);
         }
     }
     requestAnimationFrame(update);
