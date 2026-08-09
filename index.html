@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="description" content="Spectra Fest 2026 - Konser Dewa 19 ft. Ari Lasso & Ello, 05 Desember 2026 di Lapangan Niti Mandala Renon - Denpasar.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Spectra Fest 2026">
+<meta property="og:description" content="Dewa 19 ft. Ari Lasso & Ello - 05 Desember 2026, Lapangan Niti Mandala Renon Denpasar">
+<meta property="og:type" content="website">
+
+<title>Spectra Fest 2026 | DewaTiket.id</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg-primary:#0a0a0f;
+    --bg-secondary:#13131a;
+    --bg-card:rgba(28,28,38,.7);
+    --border:rgba(255,255,255,.08);
+    --border-strong:rgba(255,255,255,.15);
+    --text-primary:#ffffff;
+    --text-secondary:rgba(255,255,255,.7);
+    --text-muted:rgba(255,255,255,.5);
+    --accent-gold:#f5b800;
+    --accent-gold-2:#d4950a;
+    --accent-red:#e50024;
+    --gradient-gold:linear-gradient(135deg,#f5b800 0%,#d4950a 100%);
+    --gradient-red:linear-gradient(135deg,#e50024 0%,#990018 100%);
+    --gradient-card:linear-gradient(145deg,rgba(40,40,55,.6) 0%,rgba(20,20,28,.6) 100%);
+    --shadow-lg:0 20px 60px rgba(0,0,0,.5);
+    --radius:18px;
+    --radius-lg:24px;
+    --transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+    font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    min-height:100vh;
+    padding-bottom:130px;
+    overflow-x:hidden;
+    position:relative;
+    -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(229,0,36,.12) 0%,transparent 40%),
+        radial-gradient(circle at 80% 80%,rgba(245,184,0,.08) 0%,transparent 40%),
+        radial-gradient(circle at 50% 50%,rgba(120,40,200,.05) 0%,transparent 50%);
+    z-index:-1;
+    pointer-events:none;
+}
+
+/* HEADER */
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    height:80px;
+    background:rgba(10,10,15,.75);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 26px;
+    border-bottom:1px solid var(--border);
+    box-shadow:0 4px 30px rgba(0,0,0,.3);
+}
+
+.header-left,.header-right{
+    width:70px;
+    display:flex;
+    align-items:center;
+}
+
+.header-left{justify-content:flex-start}
+.header-right{justify-content:flex-end;gap:14px}
+
+.logo{
+    background:var(--gradient-gold);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:-1px;
+    white-space:nowrap;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.03);
+    color:#fff;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.icon-btn:hover{
+    background:rgba(255,255,255,.08);
+    border-color:var(--border-strong);
+    transform:translateY(-2px);
+}
+
+.icon-btn svg{width:22px;height:22px;stroke:currentColor}
+
+/* CONTAINER */
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:30px 27px 0;
+}
+
+/* HERO */
+.hero{
+    position:relative;
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    margin-bottom:30px;
+    box-shadow:var(--shadow-lg);
+}
+
+.poster{
+    width:100%;
+    display:block;
+    background:#111;
+    aspect-ratio:1/1.1;
+    object-fit:cover;
+    transition:transform .8s ease;
+}
+
+.hero:hover .poster{transform:scale(1.03)}
+
+.hero-overlay{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:50%;
+    background:linear-gradient(to top,rgba(10,10,15,.95) 0%,transparent 100%);
+    pointer-events:none;
+}
+
+.event-badges{
+    position:absolute;
+    top:20px;
+    left:20px;
+    right:20px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.badge{
+    background:rgba(10,10,15,.6);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--border-strong);
+    color:#fff;
+    padding:7px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+}
+
+.badge.live{
+    background:var(--gradient-red);
+    border-color:transparent;
+    box-shadow:0 0 20px rgba(229,0,36,.4);
+}
+
+.event-title{
+    font-size:42px;
+    line-height:1.15;
+    font-weight:800;
+    margin-bottom:30px;
+    letter-spacing:-1.5px;
+    background:linear-gradient(180deg,#fff 0%,rgba(255,255,255,.85) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.event-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    margin-bottom:30px;
+    padding:24px;
+    background:var(--gradient-card);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+}
+
+.info-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    font-size:18px;
+    line-height:1.4;
+    font-weight:500;
+}
+
+.info-icon{
+    width:44px;
+    height:44px;
+    min-width:44px;
+    background:rgba(245,184,0,.1);
+    border:1px solid rgba(245,184,0,.2);
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.info-icon svg{width:22px;height:22px;stroke:var(--accent-gold)}
+
+.instagram{color:var(--accent-gold);font-weight:600}
+
+.share-btn{
+    width:100%;
+    border:1px solid var(--border-strong);
+    background:rgba(255,255,255,.03);
+    color:var(--accent-gold);
+    font-size:16px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    cursor:pointer;
+    padding:14px;
+    border-radius:12px;
+    transition:var(--transition);
+    margin-top:6px;
+}
+
+.share-btn:hover{
+    background:rgba(245,184,0,.08);
+    border-color:rgba(245,184,0,.4);
+    transform:translateY(-2px);
+}
+
+/* DIVIDER */
+.divider{
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--border-strong),transparent);
+    margin:40px 0 30px;
+}
+
+/* SECTION */
+.section{
+    margin-bottom:40px;
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity .8s ease,transform .8s ease;
+}
+
+.section.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.section-title{
+    font-size:30px;
+    line-height:1.2;
+    font-weight:800;
+    margin-bottom:22px;
+    letter-spacing:-1px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.section-title::before{
+    content:'';
+    width:4px;
+    height:28px;
+    background:var(--gradient-red);
+    border-radius:2px;
+}
+
+.card{
+    background:var(--gradient-card);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:32px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    transition:var(--transition);
+}
+
+.card:hover{
+    border-color:var(--border-strong);
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+.card h3{
+    font-size:22px;
+    line-height:1.3;
+    margin-bottom:22px;
+    font-weight:700;
+    color:#fff;
+}
+
+.card p{
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:18px;
+    color:var(--text-secondary);
+}
+
+.card p:last-child{margin-bottom:0}
+
+.bold{font-weight:700;color:#fff}
+.underline{text-decoration:underline}
+
+/* LINEUP */
+.lineup-card{
+    background:var(--gradient-card);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:32px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.lineup-item{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:18px 0;
+    border-bottom:1px solid var(--border);
+    font-size:22px;
+    font-weight:700;
+}
+
+.lineup-item:last-child{border-bottom:0}
+
+.lineup-num{
+    width:42px;
+    height:42px;
+    min-width:42px;
+    background:var(--gradient-red);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    font-weight:800;
+    color:#fff;
+    box-shadow:0 0 20px rgba(229,0,36,.3);
+}
+
+/* TERMS */
+.terms ol{
+    padding-left:24px;
+    list-style:none;
+    counter-reset:term;
+}
+
+.terms li{
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:16px;
+    padding-left:8px;
+    color:var(--text-secondary);
+    counter-increment:term;
+    position:relative;
+}
+
+.terms li::before{
+    content:counter(term);
+    position:absolute;
+    left:-24px;
+    top:0;
+    width:20px;
+    height:20px;
+    background:var(--gradient-red);
+    border-radius:50%;
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.terms li:last-child{margin-bottom:0}
+
+/* SEATMAP */
+.seatmap{
+    width:100%;
+    display:block;
+    border-radius:var(--radius);
+}
+
+/* TICKET LIST */
+.ticket-box{
+    background:var(--gradient-card);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:26px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.ticket-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:20px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--border);
+}
+
+.ticket-heading-badge{
+    background:var(--gradient-gold);
+    color:#1a1a1a;
+    padding:4px 12px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.ticket{
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    transition:var(--transition);
+}
+
+.ticket:hover{
+    background:rgba(255,255,255,.07);
+    border-color:var(--border-strong);
+    transform:translateX(4px);
+}
+
+.ticket:last-child{margin-bottom:0}
+
+.ticket.active{
+    background:rgba(229,0,36,.1);
+    border-color:rgba(229,0,36,.4);
+    box-shadow:0 0 20px rgba(229,0,36,.15);
+}
+
+.ticket-info{min-width:0;flex:1}
+
+.ticket-name{
+    font-size:16px;
+    line-height:1.3;
+    font-weight:700;
+    margin-bottom:6px;
+    color:#fff;
+}
+
+.ticket-sub{
+    font-weight:400;
+    opacity:.7;
+    font-size:13px;
+}
+
+.ticket-price{
+    font-size:18px;
+    font-weight:800;
+    background:var(--gradient-gold);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.ticket-controls{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink:0;
+}
+
+.qty-btn{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    border:1px solid var(--border-strong);
+    background:rgba(255,255,255,.05);
+    color:#fff;
+    font-size:22px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.qty-btn:hover{
+    background:var(--gradient-red);
+    border-color:transparent;
+    transform:scale(1.05);
+    box-shadow:0 0 15px rgba(229,0,36,.4);
+}
+
+.qty-btn:active{transform:scale(.95)}
+
+.qty{
+    min-width:28px;
+    text-align:center;
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
+}
+
+/* BOTTOM BAR */
+.bottom-bar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:2000;
+    background:rgba(10,10,15,.85);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    padding:18px 20px calc(18px + env(safe-area-inset-bottom));
+    border-top:1px solid var(--border);
+    box-shadow:0 -10px 40px rgba(0,0,0,.5);
+}
+
+.bottom-inner{
+    max-width:900px;
+    margin:auto;
+    height:90px;
+    background:linear-gradient(135deg,rgba(255,255,255,.95) 0%,rgba(245,245,250,.95) 100%);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    display:flex;
+    align-items:stretch;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.bottom-price{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:0 28px;
+    color:#111;
+    position:relative;
+}
+
+.bottom-label{
+    font-size:13px;
+    font-weight:600;
+    color:#666;
+    margin-bottom:4px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.qty-badge{
+    background:var(--accent-red);
+    color:#fff;
+    padding:2px 8px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:700;
+    display:none;
+}
+
+.qty-badge.show{display:inline-block;animation:popIn .3s ease}
+
+@keyframes popIn{
+    0%{transform:scale(0)}
+    80%{transform:scale(1.2)}
+    100%{transform:scale(1)}
+}
+
+.bottom-total{
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:-.5px;
+}
+
+.buy-btn{
+    width:38%;
+    border:0;
+    background:var(--gradient-red);
+    color:#fff;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:var(--transition);
+    letter-spacing:.5px;
+}
+
+.buy-btn::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+    transition:left .6s ease;
+}
+
+.buy-btn:hover::before{left:100%}
+
+.buy-btn:hover{box-shadow:0 0 30px rgba(229,0,36,.5)}
+
+.buy-btn:active{transform:scale(.98)}
+.buy-btn:disabled{opacity:.65;cursor:not-allowed;pointer-events:none}
+
+/* PREMIUM LOADING OVERLAY */
+.loading-overlay{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:rgba(10,10,15,.97);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:30px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .4s ease,visibility .4s ease;
+}
+
+.loading-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.loader{
+    position:relative;
+    width:80px;
+    height:80px;
+}
+
+.loader-ring{
+    position:absolute;
+    inset:0;
+    border:3px solid transparent;
+    border-radius:50%;
+}
+
+.loader-ring:nth-child(1){
+    border-top-color:var(--accent-red);
+    animation:spin 1s linear infinite;
+    box-shadow:0 0 20px rgba(229,0,36,.5);
+}
+
+.loader-ring:nth-child(2){
+    inset:10px;
+    border-right-color:var(--accent-gold);
+    animation:spin 1.5s linear infinite reverse;
+    box-shadow:0 0 15px rgba(245,184,0,.4);
+}
+
+.loader-ring:nth-child(3){
+    inset:20px;
+    border-bottom-color:#fff;
+    animation:spin 2s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.loading-content{
+    text-align:center;
+}
+
+.loading-text{
+    font-size:18px;
+    font-weight:700;
+    color:#fff;
+    letter-spacing:1px;
+}
+
+.loading-subtext{
+    font-size:13px;
+    color:var(--text-muted);
+    margin-top:8px;
+    font-weight:500;
+}
+
+.loading-dots::after{
+    content:'';
+    animation:dots 1.5s steps(4,end) infinite;
+}
+
+@keyframes dots{
+    0%{content:''}
+    25%{content:'.'}
+    50%{content:'..'}
+    75%{content:'...'}
+    100%{content:''}
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    top:90px;
+    left:50%;
+    transform:translateX(-50%) translateY(-100px);
+    background:var(--gradient-red);
+    color:#fff;
+    padding:14px 24px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+    box-shadow:0 10px 30px rgba(229,0,36,.4);
+    z-index:3000;
+    opacity:0;
+    transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s ease;
+    white-space:nowrap;
+    max-width:90vw;
+}
+
+.toast.show{
+    transform:translateX(-50%) translateY(0);
+    opacity:1;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+    body{padding-bottom:120px}
+    
+    .header{height:70px;padding:0 18px}
+    .logo{font-size:24px}
+    .header-left,.header-right{width:50px}
+    .header-right{gap:8px}
+    .icon-btn{width:38px;height:38px;border-radius:10px}
+    .icon-btn svg{width:20px;height:20px}
+    
+    .container{padding:24px 18px 0}
+    
+    .event-title{font-size:30px;margin-bottom:24px}
+    .info-row{font-size:15px;gap:14px}
+    .info-icon{width:38px;height:38px;min-width:38px}
+    .info-icon svg{width:18px;height:18px}
+    
+    .section-title{font-size:24px}
+    .card{padding:24px}
+    .card h3{font-size:20px}
+    .card p{font-size:15px;line-height:1.65}
+    
+    .lineup-card{padding:24px}
+    .lineup-item{font-size:18px;gap:14px}
+    .lineup-num{width:36px;height:36px;min-width:36px;font-size:14px}
+    
+    .terms li{font-size:14px;margin-bottom:14px}
+    
+    .ticket-box{padding:20px}
+    .ticket{padding:16px}
+    .ticket-name{font-size:14px}
+    .ticket-price{font-size:16px}
+    .qty-btn{width:38px;height:38px;font-size:20px}
+    .qty{font-size:16px;min-width:24px}
+    
+    .bottom-bar{padding:14px 16px calc(14px + env(safe-area-inset-bottom))}
+    .bottom-inner{height:80px}
+    .bottom-price{padding:0 20px}
+    .bottom-label{font-size:12px}
+    .bottom-total{font-size:22px}
+    .buy-btn{font-size:16px}
+    
+    .loader{width:70px;height:70px}
+    .loading-text{font-size:16px}
+}
+
+@media(max-width:430px){
+    .logo{font-size:20px}
+    .event-title{font-size:26px}
+    .section-title{font-size:22px}
+    .card{padding:20px}
+    .card p{font-size:14px}
+    .terms li{font-size:13px}
+    .ticket-box{padding:16px}
+    .ticket{padding:14px}
+    .ticket-name{font-size:13px}
+    .ticket-price{font-size:15px}
+    .ticket-controls{gap:8px}
+    .qty-btn{width:34px;height:34px;font-size:18px;border-radius:10px}
+    .qty{font-size:14px}
+    .bottom-inner{height:74px}
+    .bottom-price{padding:0 16px}
+    .bottom-label{font-size:11px}
+    .bottom-total{font-size:19px}
+    .buy-btn{font-size:14px}
+}
+
+@media(prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-left">
+        <button class="icon-btn" onclick="history.back()" aria-label="Kembali">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+            </svg>
+        </button>
+    </div>
+    
+    <div class="logo">DewaTiket.id</div>
+    
+    <div class="header-right">
+        <button class="icon-btn" onclick="searchEvent()" aria-label="Cari">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="M20 20l-4-4"/>
+            </svg>
+        </button>
+        <button class="icon-btn" onclick="toggleMenu()" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">
+                <path d="M4 6h16"/><path d="M4 12h11"/><path d="M4 18h7"/>
+            </svg>
+        </button>
+    </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="container">
+    
+    <!-- HERO -->
+    <div class="hero">
+        <div class="event-badges">
+            <span class="badge live">● Konser</span>
+            <span class="badge">05 Des 2026</span>
+        </div>
+        <img src="poster.jpg" alt="Spectra Fest 2026" class="poster" loading="eager">
+        <div class="hero-overlay"></div>
+    </div>
+    
+    <h1 class="event-title">Spectra Fest 2026</h1>
+    
+    <!-- EVENT INFO -->
+    <div class="event-info">
+        <div class="info-row">
+            <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="17" rx="2"/>
+                    <path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>
+                </svg>
+            </span>
+            <span>Sabtu, 05 Desember 2026</span>
+        </div>
+        
+        <div class="info-row">
+            <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/>
+                    <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+            </span>
+            <span>Lapangan Niti Mandala Renon - Denpasar</span>
+        </div>
+        
+        <div class="info-row">
+            <span class="info-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1"/>
+                </svg>
+            </span>
+            <span class="instagram">@spectrafest.official</span>
+        </div>
+        
+        <button class="share-btn" onclick="shareEvent()">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="2.5"/>
+                <circle cx="6" cy="12" r="2.5"/>
+                <circle cx="18" cy="19" r="2.5"/>
+                <path d="M8.2 10.8l7.5-4.5"/>
+                <path d="M8.2 13.2l7.5 4.5"/>
+            </svg>
+            Bagikan Event
+        </button>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <!-- ABOUT -->
+    <section class="section" id="about">
+        <h2 class="section-title">Tentang Spectra Fest 2026</h2>
+        <div class="card">
+            <h3>Spectra Festival 2026</h3>
+            <p>Bukan sekadar tentang siapa yang tampil di atas panggung, tetapi tentang bagaimana satu malam mampu menyatukan ribuan orang dalam energi yang sama. Spectra Fest 2026 hadir sebagai sebuah perayaan musik, nostalgia, dan pengalaman yang akan terus dikenang jauh setelah lagu terakhir berakhir.</p>
+            <p>Tahun ini, Spectra Fest 2026 mempersembahkan penampilan spesial dari <span class="bold">Dewa 19 ft. Ari Lasso & Ello</span>. Perpaduan para legenda yang telah melahirkan karya-karya abadi dan menjadi soundtrack bagi berbagai generasi. Dari lagu-lagu yang membangkitkan semangat, menghadirkan kerinduan, hingga menghidupkan kembali kenangan yang tak lekang oleh waktu.</p>
+            <p>Namun, perjalanan malam itu tidak berhenti di sana.</p>
+            <p>Masih akan ada deretan <span class="bold">Special Guest Star</span> yang segera diumumkan. Nama-nama terbaik akan melengkapi kemeriahan Spectra Fest 2026, menghadirkan lebih banyak warna, kejutan, dan momen istimewa yang sayang untuk dilewatkan.</p>
+            <p>Didukung dengan produksi panggung yang megah, tata cahaya yang spektakuler, kualitas audio terbaik, serta atmosfer yang akan menyatukan ribuan penikmat musik dalam satu ruang, Spectra Fest 2026 bukan hanya menjadi tempat untuk menyaksikan sebuah konser, tetapi juga menjadi tempat untuk menciptakan cerita baru bersama.</p>
+            <p>Karena setiap lagu selalu memiliki kisahnya sendiri. Dan pada malam itu, ribuan kisah akan bertemu dalam satu panggung, bernyanyi dengan suara yang sama, dan menciptakan kenangan yang akan terus hidup.</p>
+            <p class="bold">Spectra Fest 2026</p>
+            <p>General Sale akan dibuka pada tanggal 13 Agustus 2026 hanya di Dewatiket.id</p>
+            <p><span class="bold">Tanggal:</span> 05 Desember 2026<br><span class="bold">Lokasi:</span> Lapangan Utama Niti Mandala Renon, Bali.</p>
+            <p class="bold">Headliner: Dewa 19 ft. Ari Lasso & Ello</p>
+            <p class="bold">Special Guest Star: To Be Announced</p>
+        </div>
+    </section>
+    
+    <!-- LINEUP -->
+    <section class="section" id="lineup">
+        <h2 class="section-title">Line Up</h2>
+        <div class="lineup-card">
+            <div class="lineup-item">
+                <span class="lineup-num">1</span>
+                <span>Dewa 19 ft. Ari Lasso & Ello</span>
+            </div>
+            <div class="lineup-item">
+                <span class="lineup-num">?</span>
+                <span>Special Guest Star (TBA)</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- TENTANG TIKET -->
+    <section class="section" id="terms">
+        <h2 class="section-title">Tentang Tiket</h2>
+        <div class="card terms">
+            <h3 class="underline">Syarat dan Ketentuan Tiket:</h3>
+            <ol>
+                <li>Tiket HANYA dapat dibeli melalui laman dewatiket.id.</li>
+                <li>Pembelian tiket selain melalui dewatiket.id TIDAK MENJADI TANGGUNG JAWAB PROMOTOR & segala risiko yang timbul menjadi tanggung jawab pembeli tiket.</li>
+                <li>Usia dibawah atau sama dengan 12 tahun WAJIB didampingi oleh orang tua/wali.</li>
+                <li>Anak dengan usia 5 tahun keatas wajib membeli tiket.</li>
+                <li>Harga sudah termasuk pajak.</li>
+                <li>Pada saat proses pembelian tiket, pastikan mengisi data SESUAI dengan identitas diri.</li>
+                <li>Tiket yang sudah dibeli TIDAK dapat dikembalikan (NO REFUND, NO DOWNGRADE).</li>
+                <li>QR code pada e-tiket akan MUNCUL pada periode waktu penukaran gelang.</li>
+                <li>QR code pada e-tiket hanya dapat di-scan sebanyak satu kali.</li>
+                <li>Gelang tiket digunakan untuk <span class="bold">Single Entry</span> (tidak bisa keluar-masuk).</li>
+            </ol>
+        </div>
+    </section>
+    
+    <!-- PENUKARAN -->
+    <section class="section" id="exchange">
+        <h2 class="section-title">Tentang Penukaran Tiket</h2>
+        <div class="card terms">
+            <h3 class="underline">Waktu Penukaran E-Tiket menjadi Gelang</h3>
+            <p>Tanggal penukaran e-tiket menjadi gelang akan diinfokan di halaman Instagram <span class="instagram">@spectrafest.official</span></p>
+            <h3 class="underline" style="margin-top:24px">Syarat dan Ketentuan Penukaran E-Tiket</h3>
+            <ol>
+                <li>Menunjukkan QR code yang tertera pada e-tiket.</li>
+                <li>Menunjukkan identitas diri yang sesuai dengan data pada e-tiket.</li>
+                <li>Untuk usia di atas atau sama dengan 17 tahun WAJIB menunjukkan identitas diri asli berupa KTP/SIM/Passport.</li>
+                <li>Bagi penonton yang belum memiliki identitas diri di atas, diperkenankan menggunakan identitas asli lainnya berupa Kartu Pelajar, Kartu Identitas Anak (KIA) atau Kartu Keluarga (KK).</li>
+                <li>Bagi penonton dengan usia dibawah atau sama dengan 12 tahun, penukaran dilakukan oleh orang tua/wali dengan menunjukkan identitas asli penonton.</li>
+                <li>Promotor TIDAK AKAN membantu proses penukaran gelang jika terdapat ketidaksesuaian data pada e-tiket dan identitas diri.</li>
+                <li>Penukaran gelang yang diwakilkan atau oleh sebab pindah tangan atau kepemilikan WAJIB membawa surat kuasa dalam bentuk fisik dan bermaterai, yang ditandatangani pemberi dan penerima kuasa, serta melampirkan fotokopi KTP pemberi dan penerima kuasa.</li>
+                <li>Apabila gelang yang sudah ditukarkan kemudian RUSAK atau HILANG, maka tanggung jawab sepenuhnya ada pada pemilik gelang.</li>
+                <li>Surat kuasa penukaran dapat melalui link berikut: <br><br><a href="https://bit.ly/surat-kuasa-dewatiket" target="_blank" rel="noopener" style="color:#ff5070;font-weight:700;text-decoration:none;">https://bit.ly/surat-kuasa-dewatiket</a></li>
+            </ol>
+        </div>
+    </section>
+    
+    <!-- SEATMAP -->
+    <section class="section" id="seatmap">
+        <h2 class="section-title">Denah Tiket</h2>
+        <div class="card">
+            <img src="seatmap.jpg" alt="Seat Map Spectra Fest 2026" class="seatmap" loading="lazy">
+        </div>
+    </section>
+    
+    <!-- TICKETS -->
+    <section class="section" id="tickets">
+        <h2 class="section-title">Pilih Tiket</h2>
+        <div class="ticket-box">
+            <div class="ticket-heading">
+                <span>Presale</span>
+                <span class="ticket-heading-badge">Tersedia</span>
+            </div>
+            
+            <div class="ticket" id="ticket-presaleFest">
+                <div class="ticket-info">
+                    <div class="ticket-name">Presale - Festival</div>
+                    <div class="ticket-price">Rp220.000</div>
+                </div>
+                <div class="ticket-controls">
+                    <button class="qty-btn" onclick="changeQty('presaleFest',-1)" aria-label="Kurangi">−</button>
+                    <span class="qty" id="presaleFest">0</span>
+                    <button class="qty-btn" onclick="changeQty('presaleFest',1)" aria-label="Tambah">+</button>
+                </div>
+            </div>
+            
+            <div class="ticket" id="ticket-presaleSuperFest">
+                <div class="ticket-info">
+                    <div class="ticket-name">Presale - Super Festival</div>
+                    <div class="ticket-price">Rp330.000</div>
+                </div>
+                <div class="ticket-controls">
+                    <button class="qty-btn" onclick="changeQty('presaleSuperFest',-1)" aria-label="Kurangi">−</button>
+                    <span class="qty" id="presaleSuperFest">0</span>
+                    <button class="qty-btn" onclick="changeQty('presaleSuperFest',1)" aria-label="Tambah">+</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- BOTTOM BUY BAR -->
+<div class="bottom-bar">
+    <div class="bottom-inner">
+        <div class="bottom-price">
+            <div class="bottom-label">
+                Mulai Dari
+                <span class="qty-badge" id="qtyBadge">0 tiket</span>
+            </div>
+            <div class="bottom-total" id="bottomPrice">Rp220.000</div>
+        </div>
+        <button class="buy-btn" onclick="buyTicket()">BELI TIKET</button>
+    </div>
+</div>
+
+<!-- PREMIUM LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loader">
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+        <div class="loader-ring"></div>
+    </div>
+    <div class="loading-content">
+        <div class="loading-text">Memproses Pesanan<span class="loading-dots"></span></div>
+        <div class="loading-subtext">Mohon tunggu, sedang menyiapkan form pemesanan</div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const tickets={
+  presaleFest:{price:220000,qty:0,name:"Presale - Festival"},
+  presaleSuperFest:{price:330000,qty:0,name:"Presale - Super Festival"}
+};
+const MAX_QTY=10,MIN_PRICE=220000;
+const $=id=>document.getElementById(id);
+const priceEl=$("bottomPrice"),badgeEl=$("qtyBadge"),toastEl=$("toast");
+let toastTimer;
+
+const rupiah=n=>"Rp"+n.toLocaleString("id-ID");
+
+function showToast(message){
+  toastEl.textContent=message;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>toastEl.classList.remove("show"),2800);
+}
+
+function updateTotal(){
+  let total=0,count=0;
+  for(const t of Object.values(tickets)){
+    total+=t.price*t.qty;
+    count+=t.qty;
+  }
+  priceEl.textContent=rupiah(count?total:MIN_PRICE);
+  badgeEl.textContent=count+" tiket";
+  badgeEl.classList.toggle("show",count>0);
+}
+
+function changeQty(type,change){
+  const t=tickets[type];
+  if(!t)return;
+  const qty=Math.max(0,Math.min(MAX_QTY,t.qty+change));
+  if(qty===t.qty){
+    if(change>0)showToast("Maksimal "+MAX_QTY+" tiket per kategori");
+    return;
+  }
+  t.qty=qty;
+  $(""+type).textContent=qty;
+  $("ticket-"+type)?.classList.toggle("active",qty>0);
+  updateTotal();
+}
+
+function buyTicket(){
+  const selected=[];
+  let total=0;
+  for(const [type,t] of Object.entries(tickets)){
+    if(t.qty){
+      selected.push({type,name:t.name,qty:t.qty,price:t.price});
+      total+=t.qty*t.price;
+    }
+  }
+  if(!selected.length){
+    showToast("Silakan pilih tiket terlebih dahulu");
+    return;
+  }
+  try{
+    localStorage.setItem("selectedTickets",JSON.stringify(selected));
+    localStorage.setItem("ticketTotal",String(total));
+  }catch(e){
+    showToast("Penyimpanan pesanan tidak tersedia. Silakan coba lagi.");
+    return;
+  }
+  $("loadingOverlay").classList.add("active");
+  document.body.style.overflow="hidden";
+  const btn=document.querySelector(".buy-btn");
+  if(btn)btn.disabled=true;
+  setTimeout(()=>location.href="./form.html",2000);
+}
+
+async function copyText(text){
+  if(navigator.clipboard&&window.isSecureContext){
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const area=document.createElement("textarea");
+  area.value=text;
+  area.readOnly=true;
+  area.style.cssText="position:fixed;opacity:0;pointer-events:none";
+  document.body.appendChild(area);
+  area.select();
+  if(!document.execCommand("copy"))throw new Error("copy failed");
+  area.remove();
+}
+
+async function shareEvent(){
+  const data={
+    title:"Spectra Fest 2026",
+    text:"Spectra Fest 2026 - 05 Desember 2026, Lapangan Niti Mandala Renon Denpasar",
+    url:location.href
+  };
+  if(navigator.share){
+    try{await navigator.share(data)}catch(e){}
+    return;
+  }
+  try{
+    await copyText(location.href);
+    showToast("Link event berhasil disalin");
+  }catch(e){
+    showToast("Silakan salin link halaman ini");
+  }
+}
+
+function searchEvent(){showToast("Fitur pencarian segera hadir")}
+function toggleMenu(){showToast("Menu segera hadir")}
+
+function initScrollAnimations(){
+  const sections=document.querySelectorAll(".section");
+  if(!("IntersectionObserver" in window)){
+    sections.forEach(s=>s.classList.add("visible"));
+    return;
+  }
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.1,rootMargin:"0px 0px -50px"});
+  sections.forEach(s=>observer.observe(s));
+}
+
+function initImageFallback(){
+  document.querySelectorAll("img").forEach(img=>{
+    img.addEventListener("error",()=>{
+      img.style.background="linear-gradient(135deg,#1c1c26,#0a0a0f)";
+      img.alt="Gambar tidak tersedia";
+    },{once:true});
+  });
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  updateTotal();
+  initScrollAnimations();
+  initImageFallback();
+});
+</script>
+
+</body>
+</html>
