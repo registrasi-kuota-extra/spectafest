@@ -10,6 +10,11 @@
 <meta name="author" content="DewaTiket.id">
 <meta name="robots" content="index, follow">
 
+<!-- Mobile Web App -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Spectra Fest 2026 | DewaTiket.id">
@@ -27,6 +32,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!-- Preload poster -->
+<link rel="preload" as="image" href="poster.jpg" fetchpriority="high">
 
 <!-- Favicon -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎟️</text></svg>">
@@ -93,6 +101,8 @@
     --transition:all .3s cubic-bezier(.4,0,.2,1);
     --transition-slow:all .6s cubic-bezier(.4,0,.2,1);
     --header-h:80px;
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
 }
 
 *{
@@ -105,6 +115,7 @@
 html{
     scroll-behavior:smooth;
     scrollbar-gutter:stable;
+    scroll-padding-top:calc(var(--header-h) + var(--safe-top) + 20px);
 }
 
 body{
@@ -112,14 +123,14 @@ body{
     background:var(--bg-primary);
     color:var(--text-primary);
     min-height:100vh;
-    padding-bottom:140px;
+    padding-bottom:calc(140px + var(--safe-bottom));
     overflow-x:hidden;
     position:relative;
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
 }
 
-/* Animated background orbs */
 body::before{
     content:'';
     position:fixed;
@@ -152,10 +163,9 @@ body::after{
     100%{transform:translate(20px,-15px) scale(1.05)}
 }
 
-/* SCROLL PROGRESS */
 .scroll-progress{
     position:fixed;
-    top:0;
+    top:var(--safe-top);
     left:0;
     height:3px;
     background:linear-gradient(90deg,var(--accent-red),var(--accent-gold));
@@ -165,19 +175,18 @@ body::after{
     box-shadow:0 0 12px rgba(229,0,36,.6);
 }
 
-/* HEADER */
 .header{
     position:sticky;
     top:0;
     z-index:1000;
-    height:var(--header-h);
+    height:calc(var(--header-h) + var(--safe-top));
+    padding:var(--safe-top) 26px 0;
     background:rgba(10,10,15,.72);
     backdrop-filter:blur(24px) saturate(180%);
     -webkit-backdrop-filter:blur(24px) saturate(180%);
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 26px;
     border-bottom:1px solid var(--border);
     box-shadow:0 4px 30px rgba(0,0,0,.3);
 }
@@ -211,8 +220,8 @@ body::after{
 }
 
 .icon-btn{
-    width:42px;
-    height:42px;
+    width:44px;
+    height:44px;
     border:1px solid var(--border);
     background:rgba(255,255,255,.03);
     color:#fff;
@@ -224,6 +233,11 @@ body::after{
     transition:var(--transition);
     position:relative;
     overflow:hidden;
+    -webkit-appearance:none;
+    appearance:none;
+    touch-action:manipulation;
+    user-select:none;
+    -webkit-user-select:none;
 }
 
 .icon-btn::before{
@@ -235,13 +249,16 @@ body::after{
     transition:opacity .3s ease;
 }
 
-.icon-btn:hover{
-    background:rgba(255,255,255,.08);
-    border-color:var(--border-strong);
-    transform:translateY(-2px);
+@media(hover:hover){
+    .icon-btn:hover{
+        background:rgba(255,255,255,.08);
+        border-color:var(--border-strong);
+        transform:translateY(-2px);
+    }
+    .icon-btn:hover::before{opacity:1}
 }
 
-.icon-btn:hover::before{opacity:1}
+.icon-btn:active{transform:scale(.92)}
 
 .icon-btn svg{
     width:22px;
@@ -251,7 +268,6 @@ body::after{
     z-index:1;
 }
 
-/* CONTAINER */
 .container{
     width:100%;
     max-width:920px;
@@ -259,33 +275,37 @@ body::after{
     padding:32px 27px 0;
 }
 
-/* HERO */
+/* HERO POSTER - Medium Size (Fixed) */
 .hero{
     position:relative;
     border-radius:var(--radius-xl);
     overflow:hidden;
-    margin-bottom:32px;
+    margin:0 auto 32px;
+    max-width:360px; /* Dikecilkan dari 480px agar tidak terlalu besar */
     box-shadow:var(--shadow-lg);
     border:1px solid var(--border);
 }
 
 .poster{
     width:100%;
+    height:auto; /* Otomatis menyesuaikan tinggi asli tanpa dipotong */
     display:block;
     background:#111;
-    aspect-ratio:1/1.1;
     object-fit:cover;
+    object-position:center top;
     transition:transform 1s cubic-bezier(.4,0,.2,1);
 }
 
-.hero:hover .poster{transform:scale(1.04)}
+@media(hover:hover){
+    .hero:hover .poster{transform:scale(1.04)}
+}
 
 .hero-overlay{
     position:absolute;
     bottom:0;
     left:0;
     right:0;
-    height:55%;
+    height:40%; /* Dikurangi dari 50% ke 40% agar tidak menutupi terlalu banyak poster */
     background:linear-gradient(to top,rgba(10,10,15,.98) 0%,rgba(10,10,15,.4) 50%,transparent 100%);
     pointer-events:none;
 }
@@ -315,6 +335,7 @@ body::after{
     text-transform:uppercase;
     display:inline-flex;
     align-items:center;
+    user-select:none;
 }
 
 .badge.live{
@@ -352,7 +373,6 @@ body::after{
     -webkit-text-fill-color:transparent;
 }
 
-/* COUNTDOWN */
 .countdown{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -405,7 +425,6 @@ body::after{
     font-weight:700;
 }
 
-/* EVENT INFO */
 .event-info{
     display:flex;
     flex-direction:column;
@@ -441,6 +460,12 @@ body::after{
     font-size:17px;
     line-height:1.4;
     font-weight:500;
+    min-width:0;
+}
+
+.info-row > span:last-child{
+    min-width:0;
+    flex:1;
 }
 
 .info-icon{
@@ -456,9 +481,11 @@ body::after{
     transition:var(--transition);
 }
 
-.info-row:hover .info-icon{
-    background:rgba(245,184,0,.18);
-    transform:scale(1.05);
+@media(hover:hover){
+    .info-row:hover .info-icon{
+        background:rgba(245,184,0,.18);
+        transform:scale(1.05);
+    }
 }
 
 .info-icon svg{
@@ -487,6 +514,10 @@ body::after{
     margin-top:8px;
     position:relative;
     overflow:hidden;
+    -webkit-appearance:none;
+    appearance:none;
+    touch-action:manipulation;
+    user-select:none;
 }
 
 .share-btn::after{
@@ -500,28 +531,29 @@ body::after{
     transition:left .6s ease;
 }
 
-.share-btn:hover{
-    background:rgba(245,184,0,.08);
-    border-color:rgba(245,184,0,.4);
-    transform:translateY(-2px);
+@media(hover:hover){
+    .share-btn:hover{
+        background:rgba(245,184,0,.08);
+        border-color:rgba(245,184,0,.4);
+        transform:translateY(-2px);
+    }
+    .share-btn:hover::after{left:100%}
 }
 
-.share-btn:hover::after{left:100%}
+.share-btn:active{transform:scale(.98)}
 
-/* DIVIDER */
 .divider{
     height:1px;
     background:linear-gradient(90deg,transparent,var(--border-strong),transparent);
     margin:42px 0 32px;
 }
 
-/* SECTION */
 .section{
     margin-bottom:42px;
     opacity:0;
     transform:translateY(30px);
     transition:opacity .8s ease,transform .8s ease;
-    scroll-margin-top:calc(var(--header-h) + 20px);
+    scroll-margin-top:calc(var(--header-h) + var(--safe-top) + 20px);
 }
 
 .section.visible{
@@ -548,6 +580,7 @@ body::after{
     background:var(--gradient-red);
     border-radius:2px;
     box-shadow:0 0 12px rgba(229,0,36,.5);
+    flex-shrink:0;
 }
 
 .section-title .count-pill{
@@ -561,6 +594,7 @@ body::after{
     letter-spacing:0;
     box-shadow:0 4px 12px rgba(229,0,36,.3);
     display:none;
+    flex-shrink:0;
 }
 
 .section-title .count-pill.show{display:inline-block;animation:popIn .3s ease}
@@ -591,9 +625,11 @@ body::after{
     pointer-events:none;
 }
 
-.card:hover{
-    border-color:var(--border-strong);
-    box-shadow:0 18px 50px rgba(0,0,0,.45);
+@media(hover:hover){
+    .card:hover{
+        border-color:var(--border-strong);
+        box-shadow:0 18px 50px rgba(0,0,0,.45);
+    }
 }
 
 .card h3{
@@ -617,7 +653,6 @@ body::after{
 .bold{font-weight:700;color:#fff}
 .underline{text-decoration:underline;text-decoration-color:rgba(245,184,0,.5);text-decoration-thickness:2px;text-underline-offset:4px}
 
-/* LINEUP */
 .lineup-card{
     background:var(--gradient-card);
     backdrop-filter:blur(12px);
@@ -638,11 +673,14 @@ body::after{
     font-size:22px;
     font-weight:700;
     transition:var(--transition);
+    min-width:0;
 }
 
-.lineup-item:hover{
-    padding-left:8px;
-    color:var(--accent-gold);
+@media(hover:hover){
+    .lineup-item:hover{
+        padding-left:8px;
+        color:var(--accent-gold);
+    }
 }
 
 .lineup-item:last-child{border-bottom:0}
@@ -661,6 +699,7 @@ body::after{
     color:#fff;
     box-shadow:0 0 20px rgba(229,0,36,.4);
     font-family:'Sora',sans-serif;
+    flex-shrink:0;
 }
 
 .lineup-item:last-child .lineup-num{
@@ -670,7 +709,11 @@ body::after{
     box-shadow:none;
 }
 
-/* TERMS */
+.lineup-item > span:last-child{
+    min-width:0;
+    overflow-wrap:break-word;
+}
+
 .terms ol{
     padding-left:28px;
     list-style:none;
@@ -703,21 +746,24 @@ body::after{
     align-items:center;
     justify-content:center;
     font-family:'Sora',sans-serif;
+    flex-shrink:0;
 }
 
 .terms li:last-child{margin-bottom:0}
 
-/* SEATMAP */
 .seatmap{
     width:100%;
+    height:auto;
     display:block;
     border-radius:var(--radius);
     transition:var(--transition);
 }
 
-.seatmap:hover{transform:scale(1.01)}
+@media(hover:hover){
+    .seatmap:hover{transform:scale(1.01)}
+}
 
-/* TICKET LIST */
+/* TICKET BOX */
 .ticket-box{
     background:var(--gradient-card);
     backdrop-filter:blur(12px);
@@ -740,6 +786,7 @@ body::after{
     padding-bottom:16px;
     border-bottom:1px solid var(--border);
     font-family:'Sora',sans-serif;
+    gap:12px;
 }
 
 .ticket-heading-badge{
@@ -754,6 +801,8 @@ body::after{
     display:inline-flex;
     align-items:center;
     gap:6px;
+    flex-shrink:0;
+    white-space:nowrap;
 }
 
 .ticket-heading-badge::before{
@@ -776,7 +825,7 @@ body::after{
     align-items:center;
     justify-content:space-between;
     gap:14px;
-    transition:var(--transition);
+    transition:background .3s ease,border-color .3s ease;
     position:relative;
     overflow:hidden;
 }
@@ -794,10 +843,12 @@ body::after{
     transform-origin:center;
 }
 
-.ticket:hover{
-    background:rgba(255,255,255,.07);
-    border-color:var(--border-strong);
-    transform:translateX(4px);
+@media(hover:hover){
+    .ticket:hover{
+        background:rgba(255,255,255,.07);
+        border-color:var(--border-strong);
+        transform:translateX(4px);
+    }
 }
 
 .ticket.active{
@@ -818,6 +869,7 @@ body::after{
     font-weight:700;
     margin-bottom:6px;
     color:#fff;
+    overflow-wrap:break-word;
 }
 
 .ticket-sub{
@@ -825,6 +877,52 @@ body::after{
     opacity:.6;
     font-size:12px;
     margin-top:4px;
+}
+
+/* STOCK WARNING ANIMATIONS */
+.ticket-stock {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 8px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: rgba(229, 0, 36, 0.15);
+    color: #ff5070;
+    border: 1px solid rgba(229, 0, 36, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.ticket-stock.pulse-anim {
+    animation: pulseRed 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseRed {
+    0%, 100% { 
+        transform: scale(1); 
+        background: rgba(229, 0, 36, 0.15);
+        box-shadow: 0 0 0 0 rgba(229, 0, 36, 0.4);
+    }
+    50% { 
+        transform: scale(1.05); 
+        background: rgba(229, 0, 36, 0.3);
+        box-shadow: 0 0 12px 2px rgba(229, 0, 36, 0.2);
+    }
+}
+
+.ticket-stock.shake-anim {
+    animation: shakeWarning 2s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes shakeWarning {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
 .ticket-price{
@@ -846,8 +944,8 @@ body::after{
 }
 
 .qty-btn{
-    width:40px;
-    height:40px;
+    width:44px;
+    height:44px;
     border-radius:12px;
     border:1px solid var(--border-strong);
     background:rgba(255,255,255,.05);
@@ -860,16 +958,26 @@ body::after{
     cursor:pointer;
     transition:var(--transition);
     font-family:'Sora',sans-serif;
+    -webkit-appearance:none;
+    appearance:none;
+    touch-action:manipulation;
+    user-select:none;
 }
 
-.qty-btn:hover{
+@media(hover:hover){
+    .qty-btn:hover{
+        background:var(--gradient-red);
+        border-color:transparent;
+        transform:scale(1.08);
+        box-shadow:0 0 18px rgba(229,0,36,.45);
+    }
+}
+
+.qty-btn:active{
+    transform:scale(.92);
     background:var(--gradient-red);
     border-color:transparent;
-    transform:scale(1.08);
-    box-shadow:0 0 18px rgba(229,0,36,.45);
 }
-
-.qty-btn:active{transform:scale(.92)}
 
 .qty{
     min-width:28px;
@@ -881,7 +989,6 @@ body::after{
     font-family:'Sora',sans-serif;
 }
 
-/* BOTTOM BAR */
 .bottom-bar{
     position:fixed;
     left:0;
@@ -891,7 +998,7 @@ body::after{
     background:rgba(10,10,15,.85);
     backdrop-filter:blur(24px) saturate(180%);
     -webkit-backdrop-filter:blur(24px) saturate(180%);
-    padding:18px 20px calc(18px + env(safe-area-inset-bottom));
+    padding:18px 20px calc(18px + var(--safe-bottom));
     border-top:1px solid var(--border);
     box-shadow:0 -10px 40px rgba(0,0,0,.5);
 }
@@ -927,6 +1034,7 @@ body::after{
     padding:0 28px;
     color:#111;
     position:relative;
+    min-width:0;
 }
 
 .bottom-label{
@@ -951,6 +1059,7 @@ body::after{
     display:none;
     text-transform:none;
     letter-spacing:0;
+    white-space:nowrap;
 }
 
 .qty-badge.show{display:inline-block;animation:popIn .3s ease}
@@ -968,6 +1077,7 @@ body::after{
     letter-spacing:-.5px;
     font-variant-numeric:tabular-nums;
     transition:transform .2s ease;
+    overflow-wrap:break-word;
 }
 
 .bottom-total.bump{animation:bump .3s ease}
@@ -979,7 +1089,7 @@ body::after{
 }
 
 .buy-btn{
-    width:40%;
+    width:42%;
     border:0;
     background:var(--gradient-red);
     color:#fff;
@@ -991,6 +1101,12 @@ body::after{
     transition:var(--transition);
     letter-spacing:.3px;
     font-family:'Sora',sans-serif;
+    -webkit-appearance:none;
+    appearance:none;
+    touch-action:manipulation;
+    user-select:none;
+    padding:0 20px;
+    white-space:nowrap;
 }
 
 .buy-btn::before{
@@ -1004,14 +1120,14 @@ body::after{
     transition:left .6s ease;
 }
 
-.buy-btn:hover::before{left:100%}
-
-.buy-btn:hover{box-shadow:0 0 32px rgba(229,0,36,.55)}
+@media(hover:hover){
+    .buy-btn:hover{box-shadow:0 0 32px rgba(229,0,36,.55)}
+    .buy-btn:hover::before{left:100%}
+}
 
 .buy-btn:active{transform:scale(.98)}
 .buy-btn:disabled{opacity:.65;cursor:not-allowed;pointer-events:none}
 
-/* LOADING OVERLAY */
 .loading-overlay{
     position:fixed;
     inset:0;
@@ -1027,6 +1143,7 @@ body::after{
     opacity:0;
     visibility:hidden;
     transition:opacity .4s ease,visibility .4s ease;
+    padding:20px;
 }
 
 .loading-overlay.active{
@@ -1038,6 +1155,7 @@ body::after{
     position:relative;
     width:80px;
     height:80px;
+    will-change:transform;
 }
 
 .loader-ring{
@@ -1098,10 +1216,9 @@ body::after{
     100%{content:''}
 }
 
-/* TOAST */
 .toast{
     position:fixed;
-    top:96px;
+    top:calc(96px + var(--safe-top));
     left:50%;
     transform:translateX(-50%) translateY(-100px);
     background:var(--gradient-red);
@@ -1114,8 +1231,8 @@ body::after{
     z-index:3000;
     opacity:0;
     transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s ease;
-    white-space:nowrap;
     max-width:90vw;
+    text-align:center;
 }
 
 .toast.show{
@@ -1123,7 +1240,6 @@ body::after{
     opacity:1;
 }
 
-/* TICKET HIGHLIGHT */
 .ticket-box.highlight{
     animation:highlightPulse 1s ease-in-out 2;
     border-color:rgba(229,0,36,.5);
@@ -1145,7 +1261,6 @@ body::after{
     border-color:rgba(229,0,36,.3)!important;
 }
 
-/* IMAGE FALLBACK */
 .image-fallback{
     width:100%;
     min-height:240px;
@@ -1171,10 +1286,9 @@ body::after{
     opacity:.6;
 }
 
-/* SCROLL TO TOP */
 .to-top{
     position:fixed;
-    bottom:160px;
+    bottom:calc(160px + var(--safe-bottom));
     right:24px;
     width:46px;
     height:46px;
@@ -1193,6 +1307,9 @@ body::after{
     visibility:hidden;
     transform:translateY(20px);
     transition:var(--transition);
+    -webkit-appearance:none;
+    appearance:none;
+    touch-action:manipulation;
 }
 
 .to-top.show{
@@ -1201,16 +1318,19 @@ body::after{
     transform:translateY(0);
 }
 
-.to-top:hover{
-    background:var(--gradient-red);
-    border-color:transparent;
-    transform:translateY(-3px);
-    box-shadow:0 8px 24px rgba(229,0,36,.4);
+@media(hover:hover){
+    .to-top:hover{
+        background:var(--gradient-red);
+        border-color:transparent;
+        transform:translateY(-3px);
+        box-shadow:0 8px 24px rgba(229,0,36,.4);
+    }
 }
+
+.to-top:active{transform:scale(.92)}
 
 .to-top svg{width:20px;height:20px;stroke:currentColor}
 
-/* FOCUS VISIBLE */
 :focus-visible{
     outline:2px solid var(--accent-gold);
     outline-offset:3px;
@@ -1222,63 +1342,50 @@ button:focus-visible{
     outline-offset:3px;
 }
 
-/* MOBILE */
 @media(max-width:700px){
     :root{--header-h:70px}
-    
-    body{padding-bottom:130px}
-    
-    .header{height:70px;padding:0 18px}
+    body{padding-bottom:calc(130px + var(--safe-bottom))}
+    .header{padding:var(--safe-top) 18px 0}
     .logo{font-size:22px}
     .header-left,.header-right{width:60px}
     .header-right{gap:8px}
-    .icon-btn{width:38px;height:38px;border-radius:10px}
+    .icon-btn{width:40px;height:40px;border-radius:10px}
     .icon-btn svg{width:20px;height:20px}
-    
     .container{padding:26px 18px 0}
-    
     .event-title{font-size:32px;margin-bottom:22px}
-    
     .countdown{gap:8px}
     .countdown-item{padding:14px 4px;border-radius:12px}
     .countdown-num{font-size:26px}
     .countdown-label{font-size:9px}
-    
+    .event-info{padding:20px}
     .info-row{font-size:15px;gap:14px}
-    .info-icon{width:38px;height:38px;min-width:38px}
+    .info-icon{width:40px;height:40px;min-width:40px}
     .info-icon svg{width:18px;height:18px}
-    
     .section-title{font-size:24px;gap:10px}
     .section-title::before{height:24px}
     .card{padding:24px;border-radius:20px}
     .card h3{font-size:20px}
     .card p{font-size:15px;line-height:1.7}
-    
     .lineup-card{padding:24px}
     .lineup-item{font-size:18px;gap:14px;padding:16px 0}
     .lineup-num{width:36px;height:36px;min-width:36px;font-size:14px}
-    
     .terms ol{padding-left:24px}
     .terms li{font-size:14px;margin-bottom:14px}
-    
     .ticket-box{padding:20px;border-radius:20px}
     .ticket{padding:16px}
     .ticket-name{font-size:14px}
     .ticket-price{font-size:17px}
-    .qty-btn{width:38px;height:38px;font-size:20px}
+    .qty-btn{width:40px;height:40px;font-size:20px}
     .qty{font-size:16px;min-width:24px}
-    
-    .bottom-bar{padding:14px 14px calc(14px + env(safe-area-inset-bottom))}
+    .bottom-bar{padding:14px 14px calc(14px + var(--safe-bottom))}
     .bottom-inner{height:82px;border-radius:20px}
     .bottom-price{padding:0 18px}
     .bottom-label{font-size:11px}
     .bottom-total{font-size:22px}
-    .buy-btn{font-size:15px}
-    
+    .buy-btn{font-size:15px;padding:0 14px}
     .loader{width:70px;height:70px}
     .loading-text{font-size:16px}
-    
-    .to-top{bottom:150px;right:16px;width:42px;height:42px}
+    .to-top{bottom:calc(150px + var(--safe-bottom));right:16px;width:42px;height:42px}
 }
 
 @media(max-width:430px){
@@ -1289,20 +1396,36 @@ button:focus-visible{
     .card p{font-size:14px}
     .terms li{font-size:13px}
     .ticket-box{padding:16px}
-    .ticket{padding:14px}
+    .ticket{padding:14px;gap:10px}
     .ticket-name{font-size:13px}
     .ticket-price{font-size:15px}
+    .ticket-sub{font-size:11px}
     .ticket-controls{gap:6px}
-    .qty-btn{width:34px;height:34px;font-size:18px;border-radius:10px}
-    .qty{font-size:14px}
+    .qty-btn{width:36px;height:36px;font-size:18px;border-radius:10px}
+    .qty{font-size:14px;min-width:20px}
     .bottom-inner{height:74px}
     .bottom-price{padding:0 14px}
     .bottom-label{font-size:10px}
     .bottom-total{font-size:19px}
-    .buy-btn{font-size:13px}
-    
+    .buy-btn{font-size:13px;padding:0 10px;width:45%}
     .countdown{grid-template-columns:repeat(4,1fr);gap:6px}
     .countdown-num{font-size:22px}
+    .event-badges{top:14px;left:14px;right:14px;gap:8px}
+    .badge{font-size:11px;padding:6px 12px}
+}
+
+@media(max-width:360px){
+    .event-title{font-size:22px}
+    .ticket{flex-direction:column;align-items:stretch;gap:12px}
+    .ticket-controls{justify-content:flex-end}
+    .bottom-total{font-size:17px}
+    .buy-btn{font-size:12px}
+    .countdown-num{font-size:18px}
+}
+
+@media(hover:none){
+    .ticket:hover,.icon-btn:hover,.lineup-item:hover,.share-btn:hover,.to-top:hover,.card:hover,.qty-btn:hover,.buy-btn:hover,.hero:hover .poster,.seatmap:hover{transform:none!important}
+    .lineup-item:hover{padding-left:0!important}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -1314,7 +1437,6 @@ button:focus-visible{
     }
 }
 
-/* NOSCRIPT */
 .noscript-warning{
     background:var(--gradient-red);
     color:#fff;
@@ -1325,31 +1447,35 @@ button:focus-visible{
     border-radius:12px;
 }
 </style>
+
+<noscript>
+<style>
+.section{opacity:1!important;transform:none!important}
+</style>
+</noscript>
+
 </head>
 <body>
 
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-<!-- HEADER -->
 <header class="header">
     <div class="header-left">
-        <button class="icon-btn" onclick="history.back()" aria-label="Kembali">
+        <button type="button" class="icon-btn" onclick="history.back()" aria-label="Kembali">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
             </svg>
         </button>
     </div>
-    
     <div class="logo">DewaTiket</div>
-    
     <div class="header-right">
-        <button class="icon-btn" onclick="searchEvent()" aria-label="Cari Event">
+        <button type="button" class="icon-btn" onclick="searchEvent()" aria-label="Cari Event">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">
                 <circle cx="11" cy="11" r="7"/>
                 <path d="M20 20l-4-4"/>
             </svg>
         </button>
-        <button class="icon-btn" onclick="toggleMenu()" aria-label="Menu">
+        <button type="button" class="icon-btn" onclick="toggleMenu()" aria-label="Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round">
                 <path d="M4 6h16"/><path d="M4 12h11"/><path d="M4 18h7"/>
             </svg>
@@ -1363,23 +1489,21 @@ button:focus-visible{
     </div>
 </noscript>
 
-<!-- MAIN CONTENT -->
 <main class="container">
     
-    <!-- HERO -->
+    <!-- HERO POSTER -->
     <div class="hero">
         <div class="event-badges">
             <span class="badge live">Konser</span>
             <span class="badge">05 Des 2026</span>
             <span class="badge">Bali</span>
         </div>
-        <img src="poster.jpg" alt="Poster Spectra Fest 2026 - Dewa 19 ft. Ari Lasso & Ello" class="poster" loading="eager" width="900" height="990">
+        <img src="poster.jpg" alt="Poster Spectra Fest 2026 - Dewa 19 ft. Ari Lasso & Ello" class="poster" loading="eager" decoding="async" fetchpriority="high">
         <div class="hero-overlay"></div>
     </div>
     
     <h1 class="event-title">Spectra Fest 2026</h1>
     
-    <!-- COUNTDOWN -->
     <div class="countdown" id="countdown" aria-label="Hitung mundur menuju acara">
         <div class="countdown-item">
             <div class="countdown-num" id="cd-days">000</div>
@@ -1399,7 +1523,6 @@ button:focus-visible{
         </div>
     </div>
     
-    <!-- EVENT INFO -->
     <div class="event-info">
         <div class="info-row">
             <span class="info-icon">
@@ -1410,7 +1533,6 @@ button:focus-visible{
             </span>
             <span>Sabtu, 05 Desember 2026</span>
         </div>
-        
         <div class="info-row">
             <span class="info-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1420,7 +1542,6 @@ button:focus-visible{
             </span>
             <span>Lapangan Niti Mandala Renon — Denpasar</span>
         </div>
-        
         <div class="info-row">
             <span class="info-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1431,8 +1552,7 @@ button:focus-visible{
             </span>
             <span class="instagram">@spectrafest.official</span>
         </div>
-        
-        <button class="share-btn" onclick="shareEvent()" aria-label="Bagikan event">
+        <button type="button" class="share-btn" onclick="shareEvent()" aria-label="Bagikan event">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="2.5"/>
                 <circle cx="6" cy="12" r="2.5"/>
@@ -1446,7 +1566,6 @@ button:focus-visible{
     
     <div class="divider"></div>
     
-    <!-- ABOUT -->
     <section class="section" id="about">
         <h2 class="section-title">Tentang Spectra Fest 2026</h2>
         <div class="card">
@@ -1465,7 +1584,6 @@ button:focus-visible{
         </div>
     </section>
     
-    <!-- LINEUP -->
     <section class="section" id="lineup">
         <h2 class="section-title">Line Up</h2>
         <div class="lineup-card">
@@ -1480,7 +1598,6 @@ button:focus-visible{
         </div>
     </section>
     
-    <!-- TENTANG TIKET -->
     <section class="section" id="terms">
         <h2 class="section-title">Tentang Tiket</h2>
         <div class="card terms">
@@ -1500,7 +1617,6 @@ button:focus-visible{
         </div>
     </section>
     
-    <!-- PENUKARAN -->
     <section class="section" id="exchange">
         <h2 class="section-title">Tentang Penukaran Tiket</h2>
         <div class="card terms">
@@ -1521,15 +1637,14 @@ button:focus-visible{
         </div>
     </section>
     
-    <!-- SEATMAP -->
     <section class="section" id="seatmap">
         <h2 class="section-title">Denah Tiket</h2>
         <div class="card">
-            <img src="seatmap.jpg" alt="Denah Tiket Spectra Fest 2026" class="seatmap" loading="lazy">
+            <img src="seatmap.jpg" alt="Denah Tiket Spectra Fest 2026" class="seatmap" loading="lazy" decoding="async" width="800" height="600">
         </div>
     </section>
     
-    <!-- TICKETS -->
+    <!-- TIKET SECTION DENGAN ANIMASI STOK -->
     <section class="section" id="tickets">
         <h2 class="section-title">
             Pilih Tiket
@@ -1546,11 +1661,12 @@ button:focus-visible{
                     <div class="ticket-name">Presale — Festival</div>
                     <div class="ticket-price">Rp220.000</div>
                     <div class="ticket-sub">Akses area Festival · Berdiri</div>
+                    <div class="ticket-stock pulse-anim">⚠️ Tersisa 7 Tiket</div>
                 </div>
                 <div class="ticket-controls">
-                    <button class="qty-btn" onclick="changeQty('presaleFest',-1)" aria-label="Kurangi jumlah tiket Festival">−</button>
+                    <button type="button" class="qty-btn" onclick="changeQty('presaleFest',-1)" aria-label="Kurangi jumlah tiket Festival">−</button>
                     <span class="qty" id="presaleFest" aria-live="polite">0</span>
-                    <button class="qty-btn" onclick="changeQty('presaleFest',1)" aria-label="Tambah jumlah tiket Festival">+</button>
+                    <button type="button" class="qty-btn" onclick="changeQty('presaleFest',1)" aria-label="Tambah jumlah tiket Festival">+</button>
                 </div>
             </div>
             
@@ -1559,11 +1675,12 @@ button:focus-visible{
                     <div class="ticket-name">Presale — Super Festival</div>
                     <div class="ticket-price">Rp330.000</div>
                     <div class="ticket-sub">Akses area depan panggung · Berdiri</div>
+                    <div class="ticket-stock shake-anim">⚠️ Tersisa 12 Tiket</div>
                 </div>
                 <div class="ticket-controls">
-                    <button class="qty-btn" onclick="changeQty('presaleSuperFest',-1)" aria-label="Kurangi jumlah tiket Super Festival">−</button>
+                    <button type="button" class="qty-btn" onclick="changeQty('presaleSuperFest',-1)" aria-label="Kurangi jumlah tiket Super Festival">−</button>
                     <span class="qty" id="presaleSuperFest" aria-live="polite">0</span>
-                    <button class="qty-btn" onclick="changeQty('presaleSuperFest',1)" aria-label="Tambah jumlah tiket Super Festival">+</button>
+                    <button type="button" class="qty-btn" onclick="changeQty('presaleSuperFest',1)" aria-label="Tambah jumlah tiket Super Festival">+</button>
                 </div>
             </div>
         </div>
@@ -1571,14 +1688,12 @@ button:focus-visible{
 
 </main>
 
-<!-- SCROLL TO TOP -->
-<button class="to-top" id="toTop" onclick="scrollToTop()" aria-label="Kembali ke atas">
+<button type="button" class="to-top" id="toTop" onclick="scrollToTop()" aria-label="Kembali ke atas">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
     </svg>
 </button>
 
-<!-- BOTTOM BUY BAR -->
 <div class="bottom-bar">
     <div class="bottom-inner">
         <div class="bottom-price">
@@ -1588,11 +1703,10 @@ button:focus-visible{
             </div>
             <div class="bottom-total" id="bottomPrice" aria-live="polite">Rp220.000</div>
         </div>
-        <button class="buy-btn" id="buyBtn" onclick="buyTicket()">BELI TIKET</button>
+        <button type="button" class="buy-btn" id="buyBtn" onclick="buyTicket()">BELI TIKET</button>
     </div>
 </div>
 
-<!-- LOADING OVERLAY -->
 <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
     <div class="loader" aria-hidden="true">
         <div class="loader-ring"></div>
@@ -1605,11 +1719,9 @@ button:focus-visible{
     </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
 
 <script>
-/* ============ DATA & CONFIG ============ */
 const tickets={
   presaleFest:{price:220000,qty:0,name:"Presale - Festival"},
   presaleSuperFest:{price:330000,qty:0,name:"Presale - Super Festival"}
@@ -1618,7 +1730,6 @@ const MAX_QTY=10;
 const MIN_PRICE=220000;
 const EVENT_DATE=new Date('2026-12-05T19:00:00+08:00').getTime();
 
-/* ============ SHORTCUTS ============ */
 const $=id=>document.getElementById(id);
 const priceEl=$("bottomPrice");
 const badgeEl=$("qtyBadge");
@@ -1630,9 +1741,9 @@ const scrollProgressEl=$("scrollProgress");
 const toTopEl=$("toTop");
 let toastTimer;
 
-/* ============ HELPERS ============ */
 const rupiah=n=>"Rp"+n.toLocaleString("id-ID");
-const pad=n=>String(n).padStart(2,"0");
+const pad2=n=>String(n).padStart(2,"0");
+const pad3=n=>String(n).padStart(3,"0");
 
 function showToast(message){
   if(!toastEl)return;
@@ -1642,7 +1753,6 @@ function showToast(message){
   toastTimer=setTimeout(()=>toastEl.classList.remove("show"),2800);
 }
 
-/* ============ TOTAL & STATE ============ */
 function updateTotal(){
   let total=0,count=0;
   for(const t of Object.values(tickets)){
@@ -1656,7 +1766,6 @@ function updateTotal(){
   
   badgeEl.textContent=count+" tiket";
   badgeEl.classList.toggle("show",count>0);
-  
   labelEl.textContent=count>0?"Total":"Mulai Dari";
   buyBtnEl.textContent=count>0?`BELI ${count} TIKET`:"BELI TIKET";
   
@@ -1666,7 +1775,6 @@ function updateTotal(){
   }
 }
 
-/* ============ QTY CHANGE ============ */
 function changeQty(type,change){
   const t=tickets[type];
   if(!t)return;
@@ -1683,7 +1791,6 @@ function changeQty(type,change){
   updateTotal();
 }
 
-/* ============ BUY ============ */
 function buyTicket(){
   const selected=[];
   let total=0;
@@ -1701,7 +1808,6 @@ function buyTicket(){
     
     if(ticketSection){
       ticketSection.scrollIntoView({behavior:"smooth",block:"start"});
-      
       setTimeout(()=>{
         if(ticketBox){
           ticketBox.classList.add("highlight");
@@ -1716,7 +1822,6 @@ function buyTicket(){
           }
         }
       },600);
-      
       setTimeout(()=>{
         if(ticketBox){
           ticketBox.classList.remove("highlight");
@@ -1739,11 +1844,9 @@ function buyTicket(){
   $("loadingOverlay").classList.add("active");
   document.body.style.overflow="hidden";
   if(buyBtnEl)buyBtnEl.disabled=true;
-  
   setTimeout(()=>{location.href="./form.html"},2000);
 }
 
-/* ============ SHARE ============ */
 async function copyText(text){
   if(navigator.clipboard&&window.isSecureContext){
     await navigator.clipboard.writeText(text);
@@ -1780,11 +1883,9 @@ async function shareEvent(){
   }
 }
 
-/* ============ HEADER BUTTONS ============ */
 function searchEvent(){showToast("Fitur pencarian segera hadir 🔍")}
 function toggleMenu(){showToast("Menu segera hadir ☰")}
 
-/* ============ SCROLL ANIMATIONS ============ */
 function initScrollAnimations(){
   const sections=document.querySelectorAll(".section");
   if(!("IntersectionObserver" in window)){
@@ -1802,12 +1903,11 @@ function initScrollAnimations(){
   sections.forEach(s=>observer.observe(s));
 }
 
-/* ============ IMAGE FALLBACK ============ */
 function initImageFallback(){
   document.querySelectorAll("img").forEach(img=>{
     img.addEventListener("error",()=>{
       const fallback=document.createElement("div");
-      fallback.className="image-fallback";
+      fallback.className="image-fallback "+img.className;
       fallback.setAttribute("role","img");
       fallback.setAttribute("aria-label",img.alt||"Gambar tidak tersedia");
       const label=document.createElement("span");
@@ -1818,7 +1918,6 @@ function initImageFallback(){
   });
 }
 
-/* ============ COUNTDOWN TIMER ============ */
 function initCountdown(){
   const daysEl=$("cd-days");
   const hoursEl=$("cd-hours");
@@ -1839,38 +1938,49 @@ function initCountdown(){
     const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
     const seconds=Math.floor((diff%(1000*60))/1000);
     
-    daysEl.textContent=pad(days).padStart(3,"0");
-    hoursEl.textContent=pad(hours);
-    minutesEl.textContent=pad(minutes);
-    secondsEl.textContent=pad(seconds);
+    daysEl.textContent=pad3(days);
+    hoursEl.textContent=pad2(hours);
+    minutesEl.textContent=pad2(minutes);
+    secondsEl.textContent=pad2(seconds);
   }
   update();
   setInterval(update,1000);
 }
 
-/* ============ SCROLL PROGRESS & TO TOP ============ */
 function initScrollProgress(){
   if(!scrollProgressEl)return;
+  let ticking=false;
   function update(){
     const scrollTop=window.pageYOffset||document.documentElement.scrollTop;
     const scrollHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight;
     const progress=scrollHeight>0?(scrollTop/scrollHeight)*100:0;
     scrollProgressEl.style.width=progress+"%";
-    
     if(toTopEl){
       if(scrollTop>500)toTopEl.classList.add("show");
       else toTopEl.classList.remove("show");
     }
+    ticking=false;
   }
-  window.addEventListener("scroll",update,{passive:true});
+  window.addEventListener("scroll",()=>{
+    if(!ticking){
+      requestAnimationFrame(update);
+      ticking=true;
+    }
+  },{passive:true});
   update();
 }
 
-function scrollToTop(){
-  window.scrollTo({top:0,behavior:"smooth"});
-}
+function scrollToTop(){window.scrollTo({top:0,behavior:"smooth"});}
 
-/* ============ INIT ============ */
+window.addEventListener('pageshow',(e)=>{
+  if(e.persisted){
+    document.body.style.overflow='';
+    const overlay=$("loadingOverlay");
+    if(overlay)overlay.classList.remove("active");
+    if(buyBtnEl)buyBtnEl.disabled=false;
+  }
+});
+
 document.addEventListener("DOMContentLoaded",()=>{
   updateTotal();
   initScrollAnimations();
