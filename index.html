@@ -657,7 +657,7 @@ body::before{
 .buy-btn:active{transform:scale(.98)}
 .buy-btn:disabled{opacity:.65;cursor:not-allowed;pointer-events:none}
 
-/* PREMIUM LOADING OVERLAY */
+/* LOADING OVERLAY */
 .loading-overlay{
     position:fixed;
     inset:0;
@@ -768,6 +768,28 @@ body::before{
 .toast.show{
     transform:translateX(-50%) translateY(0);
     opacity:1;
+}
+
+/* TICKET HIGHLIGHT */
+.ticket-box.highlight{
+    animation:highlightPulse 1s ease-in-out 2;
+    border-color:rgba(229,0,36,.5);
+}
+
+@keyframes highlightPulse{
+    0%,100%{
+        box-shadow:0 0 0 0 rgba(229,0,36,0);
+        transform:scale(1);
+    }
+    50%{
+        box-shadow:0 0 40px 8px rgba(229,0,36,.35);
+        transform:scale(1.01);
+    }
+}
+
+.ticket.highlight-row{
+    background:rgba(229,0,36,.08)!important;
+    border-color:rgba(229,0,36,.3)!important;
 }
 
 /* MOBILE */
@@ -1067,8 +1089,7 @@ body::before{
         <button class="buy-btn" onclick="buyTicket()">BELI TIKET</button>
     </div>
 </div>
-
-<!-- PREMIUM LOADING OVERLAY -->
+    <!-- LOADING OVERLAY -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="loader">
         <div class="loader-ring"></div>
@@ -1137,10 +1158,52 @@ function buyTicket(){
       total+=t.qty*t.price;
     }
   }
+  
+  // JIKA BELUM MEMILIH TIKET → SCROLL KE SECTION TIKET
   if(!selected.length){
-    showToast("Silakan pilih tiket terlebih dahulu");
+    showToast("⚠️ Silakan pilih jumlah tiket terlebih dahulu!");
+    
+    const ticketSection=document.getElementById("tickets");
+    const ticketBox=document.querySelector(".ticket-box");
+    
+    if(ticketSection){
+      // Scroll halus ke section tiket
+      ticketSection.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+      
+      // Tambahkan efek highlight setelah scroll selesai
+      setTimeout(()=>{
+        if(ticketBox){
+          ticketBox.classList.add("highlight");
+          // Highlight baris tiket pertama
+          const firstTicket=document.querySelector(".ticket");
+          if(firstTicket){
+            firstTicket.classList.add("highlight-row");
+            // Pulse tombol + pada tiket pertama
+            const firstPlusBtn=firstTicket.querySelector('.qty-btn:last-child');
+            if(firstPlusBtn){
+              firstPlusBtn.style.animation="popIn .6s ease 3";
+              setTimeout(()=>firstPlusBtn.style.animation="",1800);
+            }
+          }
+        }
+      },600);
+      
+      // Hapus efek highlight setelah 2.5 detik
+      setTimeout(()=>{
+        if(ticketBox){
+          ticketBox.classList.remove("highlight");
+          const firstTicket=document.querySelector(".ticket");
+          if(firstTicket)firstTicket.classList.remove("highlight-row");
+        }
+      },3100);
+    }
     return;
   }
+  
+  // JIKA SUDAH MEMILIH MINIMAL 1 TIKET → REDIRECT KE form.html
   try{
     localStorage.setItem("selectedTickets",JSON.stringify(selected));
     localStorage.setItem("ticketTotal",String(total));
@@ -1148,10 +1211,14 @@ function buyTicket(){
     showToast("Penyimpanan pesanan tidak tersedia. Silakan coba lagi.");
     return;
   }
+  
+  // Tampilkan loading overlay
   $("loadingOverlay").classList.add("active");
   document.body.style.overflow="hidden";
   const btn=document.querySelector(".buy-btn");
   if(btn)btn.disabled=true;
+  
+  // Redirect ke form.html setelah 2 detik
   setTimeout(()=>location.href="./form.html",2000);
 }
 
@@ -1177,7 +1244,11 @@ async function shareEvent(){
     url:location.href
   };
   if(navigator.share){
-    try{await navigator.share(data)}catch(e){}
+    try{
+      await navigator.share(data);
+    }catch(e){
+      if(e?.name!=="AbortError") showToast("Gagal membagikan event");
+    }
     return;
   }
   try{
@@ -1211,8 +1282,12 @@ function initScrollAnimations(){
 function initImageFallback(){
   document.querySelectorAll("img").forEach(img=>{
     img.addEventListener("error",()=>{
-      img.style.background="linear-gradient(135deg,#1c1c26,#0a0a0f)";
-      img.alt="Gambar tidak tersedia";
+      const fallback=document.createElement("div");
+      fallback.className="image-fallback";
+      fallback.setAttribute("role","img");
+      fallback.setAttribute("aria-label",img.alt||"Gambar tidak tersedia");
+      fallback.textContent=img.alt||"Gambar tidak tersedia";
+      img.replaceWith(fallback);
     },{once:true});
   });
 }
