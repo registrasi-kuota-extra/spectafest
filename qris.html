@@ -35,6 +35,8 @@
     --radius-lg:22px;
     --transition:all .3s cubic-bezier(.4,0,.2,1);
     --header-h:70px;
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -44,7 +46,7 @@ body{
     background:var(--bg-primary);
     color:var(--text-primary);
     min-height:100vh;
-    padding-bottom:50px;
+    padding-bottom:calc(50px + var(--safe-bottom));
     overflow-x:hidden;
     position:relative;
     -webkit-font-smoothing:antialiased;
@@ -53,7 +55,7 @@ body{
 }
 
 body.loaded{opacity:1}
-body.no-scroll{overflow:hidden!important}
+body.no-scroll{overflow:hidden!important;position:fixed;width:100%;}
 
 body::before{
     content:'';
@@ -66,19 +68,18 @@ body::before{
     pointer-events:none;
 }
 
-/* HEADER */
 .header{
     position:sticky;
     top:0;
     z-index:1000;
-    height:var(--header-h);
+    height:calc(var(--header-h) + var(--safe-top));
+    padding:var(--safe-top) 24px 0;
     background:rgba(10,10,15,.75);
     backdrop-filter:blur(24px) saturate(180%);
     -webkit-backdrop-filter:blur(24px) saturate(180%);
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 24px;
     border-bottom:1px solid var(--border);
 }
 
@@ -111,65 +112,40 @@ body::before{
     justify-content:center;
     cursor:pointer;
     transition:var(--transition);
+    -webkit-appearance:none;
+    appearance:none;
 }
-.icon-btn:hover{
-    background:rgba(255,255,255,.08);
-    border-color:var(--border-strong);
-}
+.icon-btn:hover{background:rgba(255,255,255,.08);border-color:var(--border-strong)}
 .icon-btn svg{width:20px;height:20px;stroke:currentColor}
 
-/* CONTAINER */
-.container{
-    width:100%;
-    max-width:780px;
-    margin:auto;
-    padding:28px 20px 40px;
-}
+.container{width:100%;max-width:780px;margin:auto;padding:28px 20px 40px}
 
-/* STEP INDICATOR */
 .step-indicator{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin-bottom:28px;
-    font-size:13px;
-    font-weight:600;
-    color:var(--text-muted);
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    margin-bottom:28px;font-size:13px;font-weight:600;color:var(--text-muted);
 }
 .step-item{display:flex;align-items:center;gap:8px}
 .step-num{
-    width:24px;
-    height:24px;
-    background:rgba(255,255,255,.05);
-    border:1px solid var(--border-strong);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:12px;
-    font-family:'Sora',sans-serif;
+    width:24px;height:24px;background:rgba(255,255,255,.05);
+    border:1px solid var(--border-strong);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-family:'Sora',sans-serif;
 }
 .step-item.active{color:var(--accent-gold)}
 .step-item.active .step-num{
-    background:var(--gradient-gold);
-    color:#000;
-    border-color:transparent;
+    background:var(--gradient-gold);color:#000;border-color:transparent;
     box-shadow:0 0 12px rgba(245,184,0,.4);
 }
 .step-line{width:40px;height:1px;background:var(--border-strong)}
 
-/* CARDS */
 .card{
     background:var(--gradient-card);
     backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
     border:1px solid var(--border);
     border-radius:var(--radius-lg);
-    padding:28px;
-    margin-bottom:20px;
+    padding:28px;margin-bottom:20px;
     box-shadow:var(--shadow-card);
-    opacity:0;
-    transform:translateY(20px);
+    opacity:0;transform:translateY(20px);
     animation:fadeUp .6s ease forwards;
 }
 .card:nth-child(2){animation-delay:.1s}
@@ -184,64 +160,44 @@ body::before{
 .total-price{font-size:2.8rem;font-weight:800;line-height:1;letter-spacing:-1.5px;background:var(--gradient-gold);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-family:'Sora',sans-serif}
 
 .copy-amount-btn{
-    margin-top:16px;
-    padding:10px 20px;
-    border:1px solid var(--border-strong);
-    background:rgba(255,255,255,.03);
-    color:var(--accent-gold);
-    border-radius:12px;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:600;
-    transition:var(--transition);
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-family:inherit;
+    margin-top:16px;padding:10px 20px;border:1px solid var(--border-strong);
+    background:rgba(255,255,255,.03);color:var(--accent-gold);border-radius:12px;
+    cursor:pointer;font-size:13px;font-weight:600;transition:var(--transition);
+    display:inline-flex;align-items:center;gap:8px;font-family:inherit;
+    -webkit-appearance:none;appearance:none;
 }
 .copy-amount-btn:hover{background:rgba(245,184,0,.08);border-color:rgba(245,184,0,.4)}
 
 .detail-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px 20px;
-    margin-top:28px;
-    padding-top:24px;
-    border-top:1px solid var(--border);
+    display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;
+    margin-top:28px;padding-top:24px;border-top:1px solid var(--border);
 }
 .detail-item{font-size:11px;color:var(--text-muted);line-height:1.4;text-transform:uppercase;letter-spacing:.5px}
 .detail-item span{display:block;color:#fff;font-weight:600;font-size:15px;margin-top:4px;word-break:break-word;text-transform:none;letter-spacing:0;font-family:'Plus Jakarta Sans',sans-serif}
 
-/* TIMER */
 .timer-box{text-align:center;padding:18px;border-radius:var(--radius);background:rgba(229,0,36,.08);border:1px solid rgba(229,0,36,.2);margin-bottom:28px}
 .timer-label{font-size:12px;font-weight:600;color:var(--accent-red);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
 .timer{font-size:2.5rem;font-weight:800;color:#fff;letter-spacing:3px;font-family:'Sora',sans-serif;text-shadow:0 0 15px rgba(229,0,36,.5)}
 .timer.urgent{color:#ff4d6d;animation:timerPulse .8s ease infinite}
 @keyframes timerPulse{50%{opacity:.5;transform:scale(.98)}}
 
-/* QR CODE */
 .qr-card{text-align:center}
 .qr-wrap{
-    display:inline-block;
-    background:#fff;
-    padding:20px;
-    border-radius:var(--radius);
-    box-shadow:0 15px 40px rgba(0,0,0,.4);
-    position:relative;
-    width:100%;
-    max-width:340px;
-    color:#1a1a1a;
+    display:inline-block;background:#fff;padding:20px;border-radius:var(--radius);
+    box-shadow:0 15px 40px rgba(0,0,0,.4);position:relative;width:100%;
+    max-width:340px;color:#1a1a1a;
 }
 .qr-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px dashed #e8e8e8}
 .qr-header .merchant{display:flex;align-items:center;gap:10px;font-weight:800;color:#1a1a1a;font-size:16px;text-align:left}
 .qr-header .merchant i{color:var(--accent-red)}
 .qr-header .nmid{font-size:10px;color:#8a8a8a;font-weight:600;text-align:right}
 
-.qr-img-box{background:#fff;padding:10px;border:1px solid #F1F5F9;border-radius:8px;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden}
+.qr-img-box{background:#fff;padding:10px;border:1px solid #F1F5F9;border-radius:8px;display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;min-height:260px}
 .qr-img-box img{width:100%;max-width:240px;display:block}
 .qr-img-box::after{content:'';position:absolute;left:10px;right:10px;top:10px;height:3px;background:linear-gradient(90deg,transparent,var(--accent-red),transparent);box-shadow:0 0 15px var(--accent-red);animation:scanLine 2.5s linear infinite}
 @keyframes scanLine{0%{top:10px}50%{top:calc(100% - 13px)}100%{top:10px}}
 
+.qr-fallback{display:none;color:#999;padding:40px;text-align:center;font-size:14px;}
 .qr-footer{margin-top:16px;display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px dashed #e8e8e8}
 .qr-footer .qris-label{font-size:24px;font-weight:900;font-style:italic;color:#1a1a1a;letter-spacing:1px}
 .qr-footer .pay-methods{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:9px;color:#8a8a8a;text-transform:uppercase;font-weight:700}
@@ -251,7 +207,6 @@ body::before{
 .scan-hint{margin-top:18px;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;gap:8px}
 .scan-hint i{color:var(--accent-gold)}
 
-/* UPLOAD */
 .upload-area{border:2px dashed rgba(245,184,0,.3);border-radius:var(--radius);padding:36px 20px;text-align:center;cursor:pointer;background:rgba(255,255,255,.02);transition:var(--transition);display:block}
 .upload-area:hover{box-shadow:0 0 20px rgba(245,184,0,.1);border-color:var(--accent-gold);background:rgba(245,184,0,.05)}
 .upload-icon{font-size:48px;margin-bottom:14px;display:block;color:var(--accent-gold)}
@@ -270,216 +225,81 @@ body::before{
 .checkbox-wrap label{font-size:14px;line-height:1.5;color:var(--text-secondary);cursor:pointer}
 
 .submit-btn{
-    width:100%;
-    padding:16px 32px;
-    border:none;
-    border-radius:var(--radius);
-    font-weight:800;
-    font-size:16px;
-    cursor:pointer;
-    background:var(--gradient-red);
-    color:#fff;
-    transition:var(--transition);
-    margin-top:20px;
-    overflow:hidden;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    position:relative;
-    font-family:'Sora',sans-serif;
+    width:100%;padding:16px 32px;border:none;border-radius:var(--radius);
+    font-weight:800;font-size:16px;cursor:pointer;background:var(--gradient-red);
+    color:#fff;transition:var(--transition);margin-top:20px;overflow:hidden;
+    letter-spacing:1px;text-transform:uppercase;position:relative;font-family:'Sora',sans-serif;
+    -webkit-appearance:none;appearance:none;
 }
 .submit-btn:hover:not(:disabled){box-shadow:0 10px 30px rgba(229,0,36,.4);transform:translateY(-2px)}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed;background:rgba(255,255,255,.1);color:var(--text-muted)}
 
-/* ================================================== */
-/* PREMIUM FULL SCREEN LOADING (3 MENIT)              */
-/* ================================================== */
+/* PREMIUM FULL SCREEN LOADING */
 .loading-overlay{
-    visibility:hidden;
-    opacity:0;
-    position:fixed;
-    inset:0;
+    visibility:hidden;opacity:0;position:fixed;inset:0;
     background:radial-gradient(circle at center, #14141f, #05050a);
-    backdrop-filter:blur(30px);
-    -webkit-backdrop-filter:blur(30px);
-    z-index:9999;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    padding:20px;
-    overflow:hidden;
+    backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+    z-index:9999;display:flex;justify-content:center;align-items:center;
+    flex-direction:column;padding:20px;overflow:hidden;
     transition:opacity .8s ease,visibility .8s ease;
 }
 .loading-overlay.active{visibility:visible;opacity:1}
 
-/* Ambient Background Orbs */
 .loading-overlay::before,.loading-overlay::after{
-    content:'';
-    position:absolute;
-    border-radius:50%;
-    filter:blur(120px);
-    opacity:0.2;
-    pointer-events:none;
+    content:'';position:absolute;border-radius:50%;filter:blur(120px);opacity:0.2;pointer-events:none;
 }
-.loading-overlay::before{
-    width:600px;height:600px;
-    background:var(--accent-red);
-    top:-200px;left:-200px;
-    animation:blobMove 12s ease-in-out infinite;
-}
-.loading-overlay::after{
-    width:500px;height:500px;
-    background:var(--accent-gold);
-    bottom:-150px;right:-150px;
-    animation:blobMove 14s ease-in-out infinite reverse;
-}
-@keyframes blobMove{
-    0%,100%{transform:translate(0,0) scale(1)}
-    50%{transform:translate(80px,80px) scale(1.3)}
-}
+.loading-overlay::before{width:600px;height:600px;background:var(--accent-red);top:-200px;left:-200px;animation:blobMove 12s ease-in-out infinite}
+.loading-overlay::after{width:500px;height:500px;background:var(--accent-gold);bottom:-150px;right:-150px;animation:blobMove 14s ease-in-out infinite reverse}
+@keyframes blobMove{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(80px,80px) scale(1.3)}}
 
-/* Floating Loading Content Box */
 .loading-content{
-    position:relative;
-    z-index:2;
-    text-align:center;
-    max-width:480px;
-    width:100%;
-    background:rgba(20,20,30,0.7);
-    padding:40px 32px;
-    border-radius:var(--radius-lg);
-    box-shadow:0 30px 80px rgba(0,0,0,0.6);
-    border:1px solid rgba(255,255,255,0.1);
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-    animation:floatBox 6s ease-in-out infinite;
+    position:relative;z-index:2;text-align:center;max-width:480px;width:100%;
+    background:rgba(20,20,30,0.7);padding:40px 32px;border-radius:var(--radius-lg);
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);animation:floatBox 6s ease-in-out infinite;
 }
-@keyframes floatBox{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
+@keyframes floatBox{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
-/* Progress Ring */
 .progress-ring-wrap{position:relative;width:180px;height:180px;margin:0 auto 36px}
 .progress-ring{transform:rotate(-90deg);width:100%;height:100%}
 .progress-ring-bg{fill:none;stroke:rgba(255,255,255,0.05);stroke-width:6}
-.progress-ring-fill{
-    fill:none;
-    stroke:url(#gradStroke);
-    stroke-width:6;
-    stroke-linecap:round;
-    transition:stroke-dashoffset .3s linear;
-    filter:drop-shadow(0 0 12px rgba(245,184,0,0.6));
-}
+.progress-ring-fill{fill:none;stroke:url(#gradStroke);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .3s linear;filter:drop-shadow(0 0 12px rgba(245,184,0,0.6))}
 .progress-percent{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.progress-percent .num{
-    font-size:3.5rem;
-    font-weight:800;
-    color:#fff;
-    line-height:1;
-    font-family:'Sora',sans-serif;
-    text-shadow:0 4px 20px rgba(245,184,0,0.3);
-}
+.progress-percent .num{font-size:3.5rem;font-weight:800;color:#fff;line-height:1;font-family:'Sora',sans-serif;text-shadow:0 4px 20px rgba(245,184,0,0.3)}
 .progress-percent .pct{font-size:1.2rem;font-weight:700;color:var(--accent-gold);margin-top:4px}
 
 .progress-icon{
-    position:absolute;
-    top:-20px;left:50%;
-    transform:translateX(-50%);
-    width:56px;height:56px;
-    border-radius:50%;
-    background:var(--gradient-red);
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 8px 24px rgba(229,0,36,0.6);
-    z-index:3;
-    border:3px solid #14141f;
+    position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:56px;height:56px;
+    border-radius:50%;background:var(--gradient-red);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(229,0,36,0.6);z-index:3;border:3px solid #14141f;
 }
 .progress-icon i{color:#fff;font-size:22px;animation:iconSpin 3s linear infinite}
-
 @keyframes iconSpin{to{transform:rotate(360deg)}}
 
-.loading-title{
-    font-size:1.8rem;
-    font-weight:800;
-    margin-bottom:10px;
-    color:#fff;
-    font-family:'Sora',sans-serif;
-    letter-spacing:-0.5px;
-}
-.loading-subtitle{
-    font-size:1rem;
-    color:var(--text-muted);
-    margin-bottom:32px;
-    min-height:24px;
-    font-weight:500;
-}
+.loading-title{font-size:1.8rem;font-weight:800;margin-bottom:10px;color:#fff;font-family:'Sora',sans-serif;letter-spacing:-0.5px}
+.loading-subtitle{font-size:1rem;color:var(--text-muted);margin-bottom:32px;min-height:24px;font-weight:500}
 
-/* Process Steps List */
 .loading-steps{display:flex;flex-direction:column;gap:12px;text-align:left;margin-top:8px;max-height:280px;overflow:hidden}
-.step-item{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    padding:14px 18px;
-    border-radius:var(--radius);
-    background:rgba(255,255,255,0.02);
-    border:1px solid var(--border);
-    opacity:0.3;
-    transition:all 0.5s cubic-bezier(.4,0,.2,1);
+.loading-steps .step-item{
+    display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:var(--radius);
+    background:rgba(255,255,255,0.02);border:1px solid var(--border);opacity:0.3;transition:all 0.5s cubic-bezier(.4,0,.2,1);
 }
-.step-item.active{
-    opacity:1;
-    background:rgba(245,184,0,0.08);
-    border-color:rgba(245,184,0,0.3);
-    transform:translateX(6px);
+.loading-steps .step-item.active{opacity:1;background:rgba(245,184,0,0.08);border-color:rgba(245,184,0,0.3);transform:translateX(6px)}
+.loading-steps .step-item.done{opacity:0.7;background:rgba(229,0,36,0.05);border-color:rgba(229,0,36,0.2)}
+.loading-steps .step-icon{
+    width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:14px;background:rgba(255,255,255,0.05);color:var(--text-muted);flex-shrink:0;transition:var(--transition);
 }
-.step-item.done{opacity:0.7;background:rgba(229,0,36,0.05);border-color:rgba(229,0,36,0.2)}
-.step-icon{
-    width:36px;height:36px;
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;
-    background:rgba(255,255,255,0.05);
-    color:var(--text-muted);
-    flex-shrink:0;
-    transition:var(--transition);
-}
-.step-item.active .step-icon{
-    background:var(--gradient-gold);
-    color:#1a1a1a;
-    box-shadow:0 0 20px rgba(245,184,0,0.4);
-}
-.step-item.done .step-icon{background:var(--gradient-red);color:#fff}
-.step-text{font-size:0.95rem;font-weight:600;color:#fff;font-family:'Plus Jakarta Sans',sans-serif}
-.step-item.active .step-icon i{animation:iconSpin 2s linear infinite}
+.loading-steps .step-item.active .step-icon{background:var(--gradient-gold);color:#1a1a1a;box-shadow:0 0 20px rgba(245,184,0,0.4)}
+.loading-steps .step-item.done .step-icon{background:var(--gradient-red);color:#fff}
+.loading-steps .step-text{font-size:0.95rem;font-weight:600;color:#fff;font-family:'Plus Jakarta Sans',sans-serif}
+.loading-steps .step-item.active .step-icon i{animation:iconSpin 2s linear infinite}
 
-/* Bottom Loading Bar & Time */
-.loading-bar-wrap{
-    margin-top:32px;
-    width:100%;
-    height:6px;
-    background:rgba(255,255,255,0.05);
-    border-radius:10px;
-    overflow:hidden;
-}
-.loading-bar{
-    height:100%;
-    width:0%;
-    background:var(--gradient-gold);
-    border-radius:10px;
-    transition:width .3s linear;
-    box-shadow:0 0 15px rgba(245,184,0,0.6);
-}
-.loading-time{
-    margin-top:14px;
-    font-size:0.85rem;
-    color:var(--text-muted);
-    font-family:'Sora',sans-serif;
-    letter-spacing:1px;
-}
+.loading-bar-wrap{margin-top:32px;width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden}
+.loading-bar{height:100%;width:0%;background:var(--gradient-gold);border-radius:10px;transition:width .3s linear;box-shadow:0 0 15px rgba(245,184,0,0.6)}
+.loading-time{margin-top:14px;font-size:0.85rem;color:var(--text-muted);font-family:'Sora',sans-serif;letter-spacing:1px}
 
-/* TOAST */
-.toast{position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--gradient-red);color:#fff;padding:14px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 12px 32px rgba(229,0,36,.4);z-index:3000;opacity:0;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s ease;max-width:90vw;text-align:center}
+.toast{position:fixed;top:calc(90px + var(--safe-top));left:50%;transform:translateX(-50%) translateY(-100px);background:var(--gradient-red);color:#fff;padding:14px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 12px 32px rgba(229,0,36,.4);z-index:3000;opacity:0;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s ease;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
 @media(max-width:600px){
@@ -490,7 +310,7 @@ body::before{
     .progress-ring-wrap{width:150px;height:150px}
     .progress-percent .num{font-size:2.8rem}
     .loading-title{font-size:1.5rem}
-    .step-text{font-size:0.85rem}
+    .loading-steps .step-text{font-size:0.85rem}
 }
 </style>
 </head>
@@ -498,13 +318,13 @@ body::before{
 
 <header class="header">
     <div class="header-left">
-        <button class="icon-btn" onclick="history.back()" aria-label="Kembali">
+        <button type="button" class="icon-btn" onclick="history.back()" aria-label="Kembali">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
         </button>
     </div>
     <div class="logo">DewaTiket</div>
     <div class="header-right">
-        <button class="icon-btn" aria-label="Bantuan" onclick="showToast('Hubungi WhatsApp: 0895-6271-08538')">
+        <button type="button" class="icon-btn" aria-label="Bantuan" onclick="showToast('Hubungi WhatsApp: 0895-6271-08538')">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         </button>
     </div>
@@ -528,7 +348,7 @@ body::before{
         <div id="orderId" class="order-id">-</div>
         <div class="total-label">Total Pembayaran</div>
         <div id="total" class="total-price">Rp 0</div>
-        <button class="copy-amount-btn" onclick="copyAmount()">
+        <button type="button" class="copy-amount-btn" onclick="copyAmount()">
             <i class="fa-solid fa-copy"></i> Salin Nominal
         </button>
         <div class="detail-grid">
@@ -554,7 +374,10 @@ body::before{
                 <div class="nmid">NMID : ID2024056789012</div>
             </div>
             <div class="qr-img-box">
-                <img src="qris.png" alt="QRIS Dynamis" id="qrisImg" onerror="this.style.display='none';this.parentElement.innerHTML+='<p style=\'color:#999;padding:40px\'>QR Code tidak tersedia<br>Silakan hubungi admin</p>'">
+                <img src="qris.png" alt="QRIS Dynamis" id="qrisImg">
+                <div class="qr-fallback" id="qrFallback">
+                    <p>QR Code tidak tersedia<br>Silakan hubungi admin</p>
+                </div>
             </div>
             <div class="qr-footer">
                 <div class="qris-label">QRIS</div>
@@ -593,14 +416,13 @@ body::before{
             <input type="checkbox" id="cek">
             <label for="cek">Saya menyatakan telah melakukan pembayaran dan mengunggah bukti pembayaran yang valid.</label>
         </div>
-        <button id="btn" class="submit-btn" disabled>
+        <button type="button" id="btn" class="submit-btn" disabled>
             <i class="fa-solid fa-lock" style="margin-right:8px;font-size:14px"></i>
             KONFIRMASI PEMBAYARAN
         </button>
     </div>
 </div>
 
-<!-- PREMIUM FULLSCREEN LOADING (3 Minutes / 180 Seconds) -->
 <div id="loading" class="loading-overlay">
     <div class="loading-content">
         <div class="progress-ring-wrap">
@@ -687,6 +509,14 @@ document.getElementById('jumlahTiket').textContent = order.jumlah_tiket || 0;
 document.getElementById('namaPemesan').textContent = order.nama || '-';
 document.getElementById('waPemesan').textContent = order.wa || '-';
 
+// QR Fallback Handler
+const qrisImg = document.getElementById('qrisImg');
+const qrFallback = document.getElementById('qrFallback');
+qrisImg.addEventListener('error', () => {
+    qrisImg.style.display = 'none';
+    qrFallback.style.display = 'block';
+});
+
 // ═══════════════════════════════════════════════
 // TOAST & COPY AMOUNT
 // ═══════════════════════════════════════════════
@@ -701,12 +531,22 @@ function showToast(msg) {
 
 function copyAmount() {
     let amount = String(order.total_bayar || 0);
-    if (navigator.clipboard) {
+    if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(amount).then(function() {
             showToast('Nominal Rp ' + amount + ' disalin!');
+        }).catch(function() {
+            showToast('Gagal menyalin. Nominal: Rp ' + amount);
         });
     } else {
-        showToast('Nominal: Rp ' + amount);
+        // Fallback copy
+        const textArea = document.createElement("textarea");
+        textArea.value = amount;
+        textArea.style.position='fixed';textArea.style.left='-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();textArea.select();
+        try { document.execCommand('copy'); showToast('Nominal Rp ' + amount + ' disalin!'); } 
+        catch(e) { showToast('Nominal: Rp ' + amount); }
+        document.body.removeChild(textArea);
     }
 }
 
@@ -762,6 +602,7 @@ fileInput.addEventListener('change', function() {
         checkButton();
     } else {
         uploaded = false;
+        document.getElementById('preview').style.display = 'none';
         checkButton();
     }
 });
@@ -774,7 +615,9 @@ async function sendEmailNotification(orderData, orderId) {
     let ticketDetailStr = '';
     if (orderData.detail_pesanan && orderData.detail_pesanan.length > 0) {
         orderData.detail_pesanan.forEach(item => {
-            ticketDetailStr += `${item.name} — ${item.qty} tiket × Rp ${item.harga.toLocaleString('id-ID')} = Rp ${item.total.toLocaleString('id-ID')}\n`;
+            let harga = item.harga ? item.harga.toLocaleString('id-ID') : '0';
+            let total = item.total ? item.total.toLocaleString('id-ID') : '0';
+            ticketDetailStr += `${item.name} — ${item.qty} tiket × Rp ${harga} = Rp ${total}\n`;
         });
     } else {
         ticketDetailStr = 'Tidak ada detail tiket';
@@ -812,19 +655,19 @@ async function sendEmailNotification(orderData, orderId) {
 // ═══════════════════════════════════════════════
 // PREMIUM LOADING (3 minutes = 180000 ms) & REDIRECT
 // ═══════════════════════════════════════════════
-let LOADING_DURATION = 180000; // 3 menit dalam milidetik
-let loadingOverlay = document.getElementById('loading');
-let progressCircle = document.getElementById('progressCircle');
-let progressNum = document.getElementById('progressNum');
-let loadingBar = document.getElementById('loadingBar');
-let loadingTime = document.getElementById('loadingTime');
-let loadingSubtitle = document.getElementById('loadingSubtitle');
+const LOADING_DURATION = 180000; // 3 menit tepat
+const loadingOverlay = document.getElementById('loading');
+const progressCircle = document.getElementById('progressCircle');
+const progressNum = document.getElementById('progressNum');
+const loadingBar = document.getElementById('loadingBar');
+const loadingTime = document.getElementById('loadingTime');
+const loadingSubtitle = document.getElementById('loadingSubtitle');
 
-let CIRCUMFERENCE = 2 * Math.PI * 90; // r=90 untuk viewBox 200x200
+const CIRCUMFERENCE = 2 * Math.PI * 90; // r=90
 progressCircle.style.strokeDasharray = CIRCUMFERENCE;
 progressCircle.style.strokeDashoffset = CIRCUMFERENCE;
 
-let subtitles = [
+const subtitles = [
     'Memulai proses verifikasi keamanan...',
     'Menghubungkan ke gateway pembayaran QRIS...',
     'Sedang menganalisis bukti transfer Anda...',
@@ -836,7 +679,7 @@ let subtitles = [
     'Mencetak e-tiket digital Anda...',
     'Menyelesaikan transaksi, mohon tunggu...'
 ];
-let stepElements = document.querySelectorAll('.step-item');
+const stepElements = document.querySelectorAll('.loading-steps .step-item');
 
 function formatTime(sec) {
     let m = Math.floor(sec / 60);
@@ -849,30 +692,36 @@ function startPremiumLoading() {
     clearInterval(timerInterval);
     loadingOverlay.classList.add('active');
     document.body.classList.add('no-scroll');
-    let startTime = Date.now();
+    
+    const startTime = Date.now();
 
     function update() {
-        let elapsed = Date.now() - startTime;
-        let progress = Math.min(elapsed / LOADING_DURATION, 1);
-        let percent = Math.floor(progress * 100);
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / LOADING_DURATION, 1);
+        const percent = Math.floor(progress * 100);
         
+        // Update Progress Circle & Bar
         progressCircle.style.strokeDashoffset = CIRCUMFERENCE * (1 - progress);
         progressNum.textContent = percent;
         loadingBar.style.width = percent + '%';
         
-        let elapsedSec = Math.floor(elapsed / 1000);
-        let totalSec = Math.floor(LOADING_DURATION / 1000);
+        // Update Timer Text
+        const elapsedSec = Math.floor(elapsed / 1000);
+        const totalSec = Math.floor(LOADING_DURATION / 1000);
         loadingTime.textContent = formatTime(elapsedSec) + ' / ' + formatTime(totalSec);
         
-        let subIdx = Math.min(Math.floor(progress * subtitles.length), subtitles.length - 1);
+        // Update Subtitle
+        const subIdx = Math.min(Math.floor(progress * subtitles.length), subtitles.length - 1);
         loadingSubtitle.textContent = subtitles[subIdx];
         
-        let activeStep = Math.min(Math.floor(progress * stepElements.length), stepElements.length - 1);
+        // Update Steps
+        const activeStep = Math.min(Math.floor(progress * stepElements.length), stepElements.length - 1);
         stepElements.forEach(function(el, idx) {
             el.classList.remove('active', 'done');
+            const icon = el.querySelector('i');
             if (idx < activeStep) { 
                 el.classList.add('done'); 
-                el.querySelector('i').className = 'fa-solid fa-check'; 
+                if(icon) icon.className = 'fa-solid fa-check'; 
             } else if (idx === activeStep) { 
                 el.classList.add('active'); 
             }
@@ -881,25 +730,35 @@ function startPremiumLoading() {
         if (progress < 1) { 
             requestAnimationFrame(update); 
         } else {
+            // Selesai
             stepElements.forEach(function(el) { 
                 el.classList.remove('active'); 
                 el.classList.add('done'); 
-                el.querySelector('i').className = 'fa-solid fa-check'; 
+                const icon = el.querySelector('i');
+                if(icon) icon.className = 'fa-solid fa-check'; 
             });
             progressNum.textContent = 100;
             loadingBar.style.width = '100%';
             loadingSubtitle.textContent = 'Pembayaran berhasil dikonfirmasi!';
-            // REDIRECT KE pending.html
-            setTimeout(function() { window.location.href = 'pending.html'; }, 1500);
+            
+            // Redirect ke pending.html setelah 1.5 detik
+            setTimeout(function() { 
+                window.location.href = 'pending.html'; 
+            }, 1500);
         }
     }
+    
+    // Mulai animasi
     requestAnimationFrame(update);
 }
 
 btn.addEventListener('click', function() {
     if (btn.disabled) return;
+    
+    // Mulai animasi loading 3 menit
     startPremiumLoading();
-    // Trigger EmailJS in the background
+    
+    // Trigger EmailJS di background (tanpa await agar tidak mengganggu loading)
     sendEmailNotification(order, orderId);
 });
 
