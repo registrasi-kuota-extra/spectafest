@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0a0a0f">
+<title>E-Tiket Berhasil | DewaTiket.id</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+:root{
+    --bg-primary:#0a0a0f;
+    --bg-card:rgba(28,28,38,.7);
+    --border:rgba(255,255,255,.08);
+    --border-strong:rgba(255,255,255,.15);
+    --text-primary:#ffffff;
+    --text-secondary:rgba(255,255,255,.7);
+    --text-muted:rgba(255,255,255,.5);
+    --accent-gold:#f5b800;
+    --accent-red:#e50024;
+    --gradient-gold:linear-gradient(135deg,#f5b800 0%,#d4950a 100%);
+    --gradient-red:linear-gradient(135deg,#e50024 0%,#990018 100%);
+    --shadow-lg:0 20px 60px rgba(0,0,0,.5);
+    --radius:18px;
+    --radius-lg:24px;
+    --transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+body{
+    font-family:'Plus Jakarta Sans',-apple-system,sans-serif;
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    min-height:100vh;
+    padding:20px;
+    overflow-x:hidden;
+    position:relative;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(229,0,36,.15) 0%,transparent 40%),
+        radial-gradient(circle at 80% 80%,rgba(245,184,0,.1) 0%,transparent 40%);
+    z-index:-1;
+    pointer-events:none;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
+    padding: 40px 0;
+}
+
+/* SUCCESS ICON ANIMATION */
+.success-icon-wrap {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.success-icon-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--gradient-red);
+    opacity: 0.2;
+    animation: pulseGlow 2s infinite;
+}
+
+.success-icon-wrap i {
+    font-size: 48px;
+    color: #fff;
+    background: var(--gradient-red);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(229,0,36,0.4);
+    z-index: 2;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(1.2); opacity: 0.1; }
+    100% { transform: scale(1); opacity: 0.2; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+/* TEXT */
+.success-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.success-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+/* TICKET CARD */
+.ticket-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.2s backwards;
+}
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* TICKET TOP */
+.ticket-top {
+    padding: 30px 24px;
+    background: linear-gradient(180deg, rgba(229,0,36,0.08) 0%, transparent 100%);
+    border-bottom: 1px dashed var(--border-strong);
+    position: relative;
+}
+
+.ticket-top h3 {
+    font-size: 22px;
+    font-weight: 800;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+}
+
+.ticket-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+/* PERFORATION CIRCLES */
+.perforation {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+}
+
+.perforation::before, .perforation::after {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background: var(--bg-primary);
+    border-radius: 50%;
+    margin-top: 12px;
+    transform: translateY(-12px);
+}
+
+.perforation::before { margin-left: -12px; }
+.perforation::after { margin-right: -12px; }
+
+/* TICKET BOTTOM */
+.ticket-bottom {
+    padding: 30px 24px;
+    text-align: center;
+}
+
+.qr-code-box {
+    width: 160px;
+    height: 160px;
+    background: #fff;
+    padding: 12px;
+    border-radius: var(--radius);
+    margin: 0 auto 20px;
+    box-shadow: 0 0 20px rgba(245,184,0,0.15);
+}
+
+.qr-code-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.order-id-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed var(--border-strong);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.order-id-box .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.order-id-box .id {
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+}
+
+.warning-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.warning-text i { color: var(--accent-red); }
+
+/* ACTIONS */
+.actions {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeUp 0.8s ease 0.4s backwards;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--gradient-red);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 10px 30px rgba(229,0,36,0.4);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+}
+
+@media (max-width: 480px) {
+    .container { padding: 20px 0; }
+    .success-title { font-size: 24px; }
+    .ticket-info-grid { grid-template-columns: 1fr; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="success-icon-wrap">
+        <i class="fa-solid fa-check"></i>
+    </div>
+
+    <h1 class="success-title">Pembayaran Berhasil!</h1>
+    <p class="success-subtitle">E-tiket Anda telah diterbitkan. Tunjukkan QR Code ini saat masuk venue.</p>
+
+    <div class="ticket-card">
+        <div class="ticket-top">
+            <h3>Spectra Fest 2026</h3>
+            <div class="ticket-info-grid">
+                <div class="info-block">
+                    <span class="info-label">Nama Pemesan</span>
+                    <span class="info-value" id="namaPemesan">-</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">Jumlah Tiket</span>
+                    <span class="info-value" id="jumlahTiket">0 Tiket</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">Tanggal</span>
+                    <span class="info-value">05 Desember 2026</span>
+                </div>
+                <div class="info-block">
+                    <span class="info-label">Lokasi</span>
+                    <span class="info-value">Niti Mandala Renon, Bali</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Perforation Effect -->
+        <div class="perforation"></div>
+
+        <div class="ticket-bottom">
+            <div class="qr-code-box">
+                <!-- QR Code generated dynamically via API -->
+                <img id="qrImg" src="" alt="QR Code E-Tiket">
+            </div>
+
+            <div class="order-id-box">
+                <div class="label">Order ID</div>
+                <div class="id" id="orderId">-</div>
+            </div>
+
+            <div class="warning-text">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>QR Code hanya dapat di-scan satu kali</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="#" class="btn-primary" onclick="downloadTicket()">
+            <i class="fa-solid fa-download"></i> UNDUH E-TIKET
+        </a>
+        <a href="index.html" class="btn-secondary" onclick="clearStorage()">
+            <i class="fa-solid fa-house"></i> KEMBALI KE BERANDA
+        </a>
+    </div>
+
+</div>
+
+<script>
+    // Ambil data pesanan dari localStorage
+    var order = JSON.parse(localStorage.getItem('protix_order') || '{}');
+    var orderId = localStorage.getItem('orderId') || 'SPECTRA-UNKNOWN';
+
+    // Inject data ke DOM
+    document.getElementById('namaPemesan').textContent = order.nama || 'Pemesan';
+    document.getElementById('jumlahTiket').textContent = (order.jumlah_tiket || 0) + ' Tiket';
+    document.getElementById('orderId').textContent = orderId;
+
+    // Generate QR Code menggunakan API eksternal (api.qrserver.com)
+    // QR akan berisi Order ID tiket
+    var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&bgcolor=ffffff&color=000000&data=' + encodeURIComponent(orderId);
+    document.getElementById('qrImg').src = qrSrc;
+
+    // Fungsi Download (Simulasi)
+    function downloadTicket() {
+        alert('E-Tiket dalam format PDF sedang disiapkan... (Simulasi)');
+        // Di implementasi nyata, Anda bisa menggunakan library seperti jsPDF
+        // untuk mengkonversi div ticket-card menjadi PDF dan mendownloadnya.
+    }
+
+    // Bersihkan localStorage saat kembali ke beranda agar tiket tidak tersimpan permanen di browser
+    function clearStorage() {
+        localStorage.removeItem('protix_order');
+        localStorage.removeItem('orderId');
+        localStorage.removeItem('selectedTickets');
+        localStorage.removeItem('ticketTotal');
+    }
+</script>
+</body>
+</html>
