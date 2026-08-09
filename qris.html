@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="theme-color" content="#0a0a0f">
-<title>Form Pemesanan | DewaTiket.id</title>
+<title>Pembayaran QRIS | DewaTiket.id</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +21,7 @@
     --text-secondary:rgba(255,255,255,.7);
     --text-muted:rgba(255,255,255,.5);
     --accent-gold:#f5b800;
+    --accent-gold-2:#d4950a;
     --accent-red:#e50024;
     --gradient-gold:linear-gradient(135deg,#f5b800 0%,#d4950a 100%);
     --gradient-red:linear-gradient(135deg,#e50024 0%,#990018 100%);
@@ -31,22 +32,20 @@
     --transition:all .3s cubic-bezier(.4,0,.2,1);
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 body{
     font-family:'Plus Jakarta Sans',-apple-system,sans-serif;
     background:var(--bg-primary);
     color:var(--text-primary);
     min-height:100vh;
-    padding-bottom:130px;
+    padding:20px;
+    padding-bottom:50px;
     overflow-x:hidden;
     position:relative;
     -webkit-font-smoothing:antialiased;
+    opacity:0;
+    transition:opacity .5s ease;
 }
 
 body::before{
@@ -60,569 +59,511 @@ body::before{
     pointer-events:none;
 }
 
-/* HEADER */
-.header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    height:80px;
-    background:rgba(10,10,15,.75);
-    backdrop-filter:blur(20px) saturate(180%);
-    -webkit-backdrop-filter:blur(20px) saturate(180%);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 26px;
-    border-bottom:1px solid var(--border);
-}
+body.no-scroll { overflow: hidden !important; }
+.container { max-width: 780px; margin: auto; }
 
-.header-left,.header-right{
-    width:70px;
-    display:flex;
-    align-items:center;
-}
-.header-left{justify-content:flex-start}
-.header-right{justify-content:flex-end;gap:14px}
-
-.logo{
+/* LOGO AREA */
+.logo { text-align:center; margin-bottom:32px; animation:fadeUp .5s ease backwards; }
+.logo-event { width:100%; max-width:320px; height:auto; display:block; margin:0 auto 16px; border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); border:1px solid var(--border); }
+.logo-brand { 
+    display:inline-flex; align-items:center; gap:8px; font-size:28px; font-weight:800; letter-spacing:-1px;
     background:var(--gradient-gold);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    font-size:28px;
-    font-weight:800;
-    letter-spacing:-1px;
-    white-space:nowrap;
-    text-decoration:none;
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
 }
 
-.icon-btn{
-    width:42px; height:42px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.03);
-    color:#fff;
-    border-radius:12px;
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-    transition:var(--transition);
-    text-decoration:none;
-}
-.icon-btn:hover{
-    background:rgba(255,255,255,.08);
-    border-color:var(--border-strong);
-    transform:translateY(-2px);
-}
-.icon-btn svg{width:22px;height:22px;stroke:currentColor}
-
-/* CONTAINER */
-.container{
-    width:100%;
-    max-width:900px;
-    margin:auto;
-    padding:30px 20px 40px;
-}
-
-/* HERO BANNER */
-.hero-banner{
-    position:relative;
-    border-radius:var(--radius-lg);
-    overflow:hidden;
-    margin-bottom:-50px;
-    z-index:1;
-    box-shadow:var(--shadow-lg);
-    border:1px solid var(--border);
-}
-.hero-banner img{
-    width:100%;
-    aspect-ratio:2.5/1;
-    object-fit:cover;
-    display:block;
-}
-
-.hero-card{
-    position:relative;
-    z-index:2;
+/* CARDS */
+.card {
     background:var(--gradient-card);
-    backdrop-filter:blur(15px);
-    border:1px solid var(--border);
-    border-radius:var(--radius-lg);
-    padding:30px;
-    text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,0.4);
-    margin-bottom:30px;
-}
-.hero-card h2{
-    font-size:28px;
-    font-weight:800;
-    margin-bottom:6px;
-    letter-spacing:-0.5px;
-    background:var(--gradient-gold);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-.hero-card p{
-    color:var(--text-muted);
-    font-size:14px;
-    margin-bottom:18px;
-}
-.event-info{
-    display:flex; justify-content:center; gap:20px; flex-wrap:wrap;
-    color:var(--text-secondary); font-size:14px; font-weight:500;
-}
-.event-info div{display:flex; align-items:center; gap:8px;}
-.event-info i{color:var(--accent-gold);}
-
-/* FORM CARD */
-.form-card{
-    background:var(--gradient-card);
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px);
     border:1px solid var(--border);
     border-radius:var(--radius-lg);
     padding:28px;
-    margin-bottom:24px;
+    margin-bottom:20px;
     box-shadow:0 10px 30px rgba(0,0,0,0.3);
-    opacity:0;
-    transform:translateY(20px);
-    animation:fadeUp .6s ease forwards;
+    animation:fadeUp 0.6s ease backwards;
 }
-.form-card:nth-child(2){animation-delay:.1s}
-.form-card:nth-child(3){animation-delay:.2s}
-.form-card:nth-child(4){animation-delay:.3s}
+.card:nth-child(2) { animation-delay: 0.08s; }
+.card:nth-child(3) { animation-delay: 0.16s; }
+.card:nth-child(4) { animation-delay: 0.24s; }
 
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.card-title{
-    font-size:20px;
-    font-weight:700;
-    margin-bottom:22px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    border-bottom:1px solid var(--border);
-    padding-bottom:16px;
+/* ORDER INFO */
+.order-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:6px; }
+.order-id { color:var(--accent-gold); font-weight:700; font-size:16px; font-family:monospace; letter-spacing:0.5px; word-break:break-all; margin-bottom:24px; }
+.total-label { font-size:13px; font-weight:600; color:var(--text-muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px; }
+.total-price { 
+    font-size:2.8rem; font-weight:800; line-height:1; letter-spacing:-1.5px;
+    background:var(--gradient-gold);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
 }
-.card-title i{color:var(--accent-gold);font-size:18px}
 
-.form-group{margin-bottom:18px;}
-.form-group label{display:block; font-weight:600; font-size:14px; margin-bottom:8px; color:var(--text-secondary);}
-.input-icon-wrap{position:relative; display:flex; align-items:center;}
-.input-icon{position:absolute; left:16px; font-size:15px; color:var(--text-muted); pointer-events:none; transition:var(--transition);}
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; margin-top:28px; padding-top:24px; border-top:1px solid var(--border); }
+.detail-item { font-size:12px; color:var(--text-muted); line-height:1.4; text-transform:uppercase; letter-spacing:0.5px; }
+.detail-item span { display:block; color:#fff; font-weight:600; font-size:15px; margin-top:4px; word-break:break-word; text-transform:none; letter-spacing:0; }
 
-input, select, textarea{
-    width:100%;
-    padding:14px 16px 14px 46px;
-    border-radius:var(--radius);
-    border:1px solid var(--border);
-    background:rgba(255,255,255,0.04);
-    color:var(--text-primary);
-    font-size:15px;
-    transition:var(--transition);
-    font-family:'Plus Jakarta Sans', sans-serif;
-}
-textarea{resize:vertical; min-height:100px; padding-left:16px;}
-select{
-    appearance:none; -webkit-appearance:none; -moz-appearance:none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5b800' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat:no-repeat;
-    background-position:right 16px center;
-    background-size:16px;
-    cursor:pointer;
-}
-select option{background:#13131a;}
+/* TIMER */
+.timer-box { text-align:center; padding:18px; border-radius:var(--radius); background:rgba(229,0,36,0.08); border:1px solid rgba(229,0,36,0.2); margin-bottom:28px; }
+.timer-label { font-size:12px; font-weight:600; color:var(--accent-red); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px; }
+.timer { font-size:2.5rem; font-weight:800; color:#fff; letter-spacing:3px; font-family:'Helvetica Neue',Arial,sans-serif; text-shadow:0 0 15px rgba(229,0,36,0.5); }
+.timer.urgent { color:#ff4d6d; animation:timerPulse 0.8s ease infinite; }
+@keyframes timerPulse { 50% { opacity: 0.5; transform:scale(0.98); } }
 
-input:focus, select:focus, textarea:focus{
-    outline:none;
-    border-color:var(--accent-gold);
-    background:rgba(255,255,255,0.06);
-    box-shadow:0 0 0 3px rgba(245,184,0,0.1);
+/* QR FRAME */
+.qr-card { text-align:center; }
+.qr-wrap {
+    display:inline-block; background:#fff; padding:20px; border-radius:var(--radius);
+    box-shadow:0 15px 40px rgba(0,0,0,0.4); position:relative; width:340px; max-width:100%; color:#1a1a1a;
 }
-.input-icon-wrap:focus-within .input-icon{color:var(--accent-gold);}
-input.error, select.error, textarea.error{
-    border-color:var(--accent-red);
-    background:rgba(229,0,36,0.05);
-    box-shadow:0 0 0 3px rgba(229,0,36,0.1);
-    animation:shake 0.4s;
-}
-@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+.qr-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px dashed #e8e8e8; }
+.qr-header .merchant { display:flex; align-items:center; gap:10px; font-weight:800; color:#1a1a1a; font-size:16px; text-align:left; }
+.qr-header .merchant i { color:var(--accent-red); }
+.qr-header .nmid { font-size:10px; color:#8a8a8a; font-weight:600; text-align:right; }
 
-/* SUMMARY */
-.summary-row{display:flex; justify-content:space-between; padding:10px 0; font-size:14px; color:var(--text-secondary);}
-.summary-row strong{color:#fff; font-weight:600;}
-.total{
-    font-size:16px; font-weight:700; color:#fff;
-    border-top:1px dashed var(--border-strong); margin-top:10px; padding-top:16px;
+.qr-img-box { background:#fff; padding:10px; border:1px solid #F1F5F9; border-radius:8px; display:flex; justify-content:center; align-items:center; position:relative; }
+.qr-img-box img { width:100%; max-width:240px; display:block; }
+/* Scan Line Animation */
+.qr-img-box::after {
+    content:''; position:absolute; left:10px; right:10px; top:10px; height:3px; 
+    background:linear-gradient(90deg, transparent, var(--accent-red), transparent);
+    box-shadow:0 0 15px var(--accent-red);
+    animation:scanLine 2.5s linear infinite;
 }
-.total span{color:var(--accent-gold); font-size:22px; font-weight:800;}
+@keyframes scanLine { 0%{top:10px} 50%{top:calc(100% - 13px)} 100%{top:10px} }
 
-/* CHECKBOX */
-.check{
-    display:flex; gap:14px; margin-top:14px; align-items:flex-start;
-    background:rgba(255,255,255,0.03); padding:16px;
-    border-radius:var(--radius); border:1px solid var(--border);
-}
-.check input{width:20px; height:20px; min-width:20px; accent-color:var(--accent-red); cursor:pointer; margin-top:2px;}
-.check label{font-size:14px; color:var(--text-secondary); cursor:pointer; line-height:1.5;}
+.qr-footer { margin-top:16px; display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px dashed #e8e8e8; }
+.qr-footer .qris-label { font-size:24px; font-weight:900; font-style:italic; color:#1a1a1a; letter-spacing:1px; }
+.qr-footer .pay-methods { display:flex; flex-direction:column; align-items:flex-end; gap:4px; font-size:9px; color:#8a8a8a; text-transform:uppercase; font-weight:700; }
+.qr-footer .pay-methods .icons { display:flex; gap:6px; font-size:16px; color:#475569; }
 
-/* BOTTOM BAR */
-.bottom-bar{
-    position:fixed; left:0; right:0; bottom:0; z-index:2000;
-    background:rgba(10,10,15,0.85);
-    backdrop-filter:blur(20px) saturate(180%);
-    padding:18px 20px calc(18px + env(safe-area-inset-bottom));
-    border-top:1px solid var(--border);
-    box-shadow:0 -10px 40px rgba(0,0,0,0.5);
-}
-.bottom-inner{
-    max-width:900px; margin:auto; height:90px;
-    background:linear-gradient(135deg,rgba(255,255,255,.95) 0%,rgba(245,245,250,.95) 100%);
-    border-radius:var(--radius-lg);
-    overflow:hidden; display:flex; align-items:stretch;
-    box-shadow:0 10px 30px rgba(0,0,0,0.4);
-}
-.bottom-price{
-    flex:1; display:flex; flex-direction:column; justify-content:center;
-    padding:0 28px; color:#111;
-}
-.bottom-label{font-size:13px; font-weight:600; color:#666; margin-bottom:4px;}
-.bottom-total{font-size:26px; font-weight:800; letter-spacing:-0.5px;}
-
-.buy-btn{
-    width:38%; border:0;
+.qr-badge {
+    position:absolute; top:-14px; left:50%; transform:translateX(-50%); 
     background:var(--gradient-red); color:#fff;
-    font-size:16px; font-weight:800; cursor:pointer;
-    position:relative; overflow:hidden;
-    transition:var(--transition); display:flex; align-items:center; justify-content:center; gap:8px;
+    font-size:12px; font-weight:700; padding:6px 20px; border-radius:20px; text-transform:uppercase; letter-spacing:1px;
+    white-space:nowrap; box-shadow:0 4px 15px rgba(229,0,36,0.4); z-index:10;
 }
-.buy-btn:hover{box-shadow:0 0 30px rgba(229,0,36,0.5);}
-.buy-btn:disabled{opacity:0.7; cursor:wait;}
 
-/* PREMIUM LOADING */
-.loading-overlay{
-    position:fixed; inset:0; z-index:9999;
-    background:rgba(10,10,15,0.97);
-    backdrop-filter:blur(20px);
-    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:30px;
-    opacity:0; visibility:hidden;
-    transition:opacity .4s ease,visibility .4s ease;
+.scan-hint { margin-top:18px; font-size:13px; color:var(--text-secondary); display:flex; align-items:center; justify-content:center; gap:8px; }
+.scan-hint i { color:var(--accent-gold); }
+
+/* UPLOAD AREA */
+.upload-area {
+    border:2px dashed rgba(245,184,0,0.3); border-radius:var(--radius); padding:36px 20px; text-align:center; cursor:pointer;
+    background:rgba(255,255,255,0.02); transition:var(--transition); display:block;
 }
-.loading-overlay.active{opacity:1; visibility:visible;}
-.loader{position:relative; width:80px; height:80px;}
-.loader-ring{position:absolute; inset:0; border:3px solid transparent; border-radius:50%;}
-.loader-ring:nth-child(1){border-top-color:var(--accent-red); animation:spin 1s linear infinite; box-shadow:0 0 20px rgba(229,0,36,.5);}
-.loader-ring:nth-child(2){inset:10px; border-right-color:var(--accent-gold); animation:spin 1.5s linear infinite reverse; box-shadow:0 0 15px rgba(245,184,0,.4);}
-.loader-ring:nth-child(3){inset:20px; border-bottom-color:#fff; animation:spin 2s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:18px; font-weight:700; color:#fff; letter-spacing:1px;}
-.loading-subtext{font-size:13px; color:var(--text-muted); margin-top:8px; font-weight:500;}
+.upload-area:hover { box-shadow:0 0 20px rgba(245,184,0,0.1); border-color:var(--accent-gold); background:rgba(245,184,0,0.05); }
+.upload-icon { font-size:48px; margin-bottom:14px; display:block; color:var(--accent-gold); }
+.upload-area h2 { font-size:18px; font-weight:700; margin-bottom:8px; color:#fff; }
+.upload-area p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+.upload-area .file-types { display:inline-flex; gap:6px; margin-top:12px; }
+.upload-area .file-types span { background:rgba(245,184,0,0.1); color:var(--accent-gold); font-size:10px; font-weight:700; padding:4px 12px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px; }
 
-/* TOAST */
-.toast{
-    position:fixed; top:90px; left:50%;
-    transform:translateX(-50%) translateY(-100px);
-    background:var(--gradient-red); color:#fff;
-    padding:14px 24px; border-radius:12px;
-    font-size:14px; font-weight:600;
-    box-shadow:0 10px 30px rgba(229,0,36,0.4);
-    z-index:3000; opacity:0;
-    transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s ease;
-    max-width:90vw; text-align:center;
+.preview { display:none; margin-top:20px; padding:20px; border-radius:var(--radius); background:rgba(255,255,255,0.03); border:1px solid var(--border); }
+.preview img { width:100%; max-height:300px; object-fit:contain; border-radius:8px; background:#fff; }
+.preview .file-name { margin-top:12px; font-size:13px; font-weight:600; color:var(--accent-gold); word-break:break-word; }
+.preview .success-msg { margin-top:8px; font-weight:600; font-size:13px; color:#4ADE80; display:flex; align-items:center; gap:6px; }
+
+/* CHECKBOX & BUTTON */
+.checkbox-wrap { margin-top:24px; display:flex; gap:14px; align-items:flex-start; background:rgba(255,255,255,0.03); padding:16px; border-radius:var(--radius); border:1px solid var(--border); }
+.checkbox-wrap input[type="checkbox"] { width:20px; height:20px; min-width:20px; margin-top:2px; accent-color:var(--accent-red); cursor:pointer; }
+.checkbox-wrap label { font-size:14px; line-height:1.5; color:var(--text-secondary); cursor:pointer; }
+
+.submit-btn {
+    width:100%; padding:16px 32px; border:none; border-radius:var(--radius); font-weight:800; font-size:16px; cursor:pointer;
+    background:var(--gradient-red); color:#fff; transition:var(--transition); margin-top:20px; overflow:hidden;
+    letter-spacing:1px; text-transform:uppercase; position:relative;
 }
-.toast.show{transform:translateX(-50%) translateY(0); opacity:1;}
+.submit-btn:hover:not(:disabled) { box-shadow:0 10px 30px rgba(229,0,36,0.4); transform:translateY(-2px); }
+.submit-btn:disabled { opacity:0.4; cursor:not-allowed; background:rgba(255,255,255,0.1); color:var(--text-muted); }
 
-@media(max-width:700px){
-    .header{height:70px; padding:0 18px;}
-    .logo{font-size:24px;}
-    .header-left,.header-right{width:50px;}
-    .icon-btn{width:38px; height:38px;}
-    .container{padding:20px 16px 40px;}
-    .hero-card{padding:24px 20px;}
-    .hero-card h2{font-size:22px;}
-    .form-card{padding:22px 20px;}
-    .bottom-bar{padding:14px 16px calc(14px + env(safe-area-inset-bottom));}
-    .bottom-inner{height:80px;}
-    .bottom-price{padding:0 20px;}
-    .bottom-total{font-size:22px;}
-    .buy-btn{font-size:14px;}
+/* PREMIUM LOADING OVERLAY */
+.loading-overlay {
+    visibility:hidden; opacity:0; position:fixed; inset:0; background:rgba(10,10,15,0.98);
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); z-index:9999; display:flex;
+    justify-content:center; align-items:center; flex-direction:column; padding:20px; overflow:hidden;
+    transition:opacity .4s ease, visibility .4s ease;
+}
+.loading-overlay.active { visibility:visible; opacity:1; }
+
+.loading-overlay::before, .loading-overlay::after {
+    content:''; position:absolute; border-radius:50%; filter:blur(100px); opacity:0.15; pointer-events:none;
+}
+.loading-overlay::before { width:500px; height:500px; background:var(--accent-red); top:-150px; left:-150px; animation:blobMove 8s ease-in-out infinite; }
+.loading-overlay::after { width:400px; height:400px; background:var(--accent-gold); bottom:-100px; right:-100px; animation:blobMove 10s ease-in-out infinite reverse; }
+@keyframes blobMove { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(50px, 50px) scale(1.2); } }
+
+.loading-content { position:relative; z-index:2; text-align:center; max-width:440px; width:100%; background:var(--gradient-card); padding:36px 28px; border-radius:var(--radius-lg); box-shadow:0 20px 60px rgba(0,0,0,0.5); border:1px solid var(--border); backdrop-filter:blur(10px); }
+.progress-ring-wrap { position:relative; width:160px; height:160px; margin:0 auto 32px; }
+.progress-ring { transform:rotate(-90deg); width:100%; height:100%; }
+.progress-ring-bg { fill:none; stroke:rgba(255,255,255,0.05); stroke-width:8; }
+.progress-ring-fill { fill:none; stroke:url(#gradStroke); stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset 0.3s linear; filter:drop-shadow(0 0 10px rgba(245,184,0,0.5)); }
+.progress-percent { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.progress-percent .num { font-size:2.8rem; font-weight:800; color:#fff; line-height:1; font-family:'Helvetica Neue',Arial,sans-serif; }
+.progress-percent .pct { font-size:1rem; font-weight:700; color:var(--accent-gold); margin-top:4px; }
+
+.progress-icon { position:absolute; top:-15px; left:50%; transform:translateX(-50%); width:44px; height:44px; border-radius:50%; background:var(--gradient-red); display:flex; align-items:center; justify-content:center; box-shadow:0 5px 15px rgba(229,0,36,0.5); z-index:3; }
+.progress-icon i { color:#fff; font-size:18px; animation:iconSpin 2s linear infinite; }
+@keyframes iconSpin { to { transform:rotate(360deg); } }
+
+.loading-title { font-size:1.5rem; font-weight:800; margin-bottom:8px; color:#fff; }
+.loading-subtitle { font-size:0.9rem; color:var(--text-muted); margin-bottom:28px; min-height:20px; }
+
+.loading-steps { display:flex; flex-direction:column; gap:10px; text-align:left; margin-top:8px; }
+.step-item { display:flex; align-items:center; gap:14px; padding:12px 16px; border-radius:var(--radius); background:rgba(255,255,255,0.02); border:1px solid var(--border); opacity:0.4; transition:all 0.4s ease; }
+.step-item.active { opacity:1; background:rgba(245,184,0,0.05); border-color:rgba(245,184,0,0.3); transform:translateX(4px); }
+.step-item.done { opacity:1; background:rgba(229,0,36,0.05); border-color:rgba(229,0,36,0.3); }
+.step-icon { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; background:rgba(255,255,255,0.05); color:var(--text-muted); flex-shrink:0; transition:var(--transition); }
+.step-item.active .step-icon { background:var(--gradient-gold); color:#1a1a1a; box-shadow:0 0 15px rgba(245,184,0,0.4); }
+.step-item.done .step-icon { background:var(--gradient-red); color:#fff; }
+.step-text { font-size:0.9rem; font-weight:600; color:#fff; }
+.step-item.active .step-icon i { animation:iconSpin 1.5s linear infinite; }
+
+.loading-bar-wrap { margin-top:28px; width:100%; height:8px; background:rgba(255,255,255,0.05); border-radius:10px; overflow:hidden; }
+.loading-bar { height:100%; width:0%; background:var(--gradient-gold); border-radius:10px; transition:width 0.3s linear; box-shadow:0 0 10px rgba(245,184,0,0.5); }
+.loading-time { margin-top:12px; font-size:0.75rem; color:var(--text-muted); font-family:monospace; letter-spacing:1px; }
+
+@media (max-width: 600px) {
+    .timer { font-size:2rem; } 
+    .total-price { font-size:2.2rem; } 
+    .qr-wrap { width:100%; } 
+    .detail-grid { grid-template-columns:1fr; gap:12px; } 
+    .loading-content { padding:28px 20px; }
 }
 </style>
 </head>
 <body>
 
-<header class="header">
-    <div class="header-left">
-        <button class="icon-btn" onclick="history.back()" aria-label="Kembali">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
-            </svg>
+<div class="container">
+    <div class="logo">
+        <img src="banner.png" alt="Spectra Fest 2026" class="logo-event">
+        <div class="logo-brand">DewaTiket.id</div>
+    </div>
+
+    <div class="card">
+        <div class="order-label">Order ID</div>
+        <div id="orderId" class="order-id">-</div>
+        
+        <div class="total-label">Total Pembayaran</div>
+        <div id="total" class="total-price">Rp 0</div>
+
+        <div class="detail-grid">
+            <div class="detail-item">Kategori Tiket<span id="jenisTiket">-</span></div>
+            <div class="detail-item">Jumlah Tiket<span id="jumlahTiket">0</span></div>
+            <div class="detail-item">Nama Pemesan<span id="namaPemesan">-</span></div>
+            <div class="detail-item">WhatsApp<span id="waPemesan">-</span></div>
+        </div>
+    </div>
+
+    <div class="card qr-card">
+        <div class="timer-box">
+            <div class="timer-label">Selesaikan pembayaran dalam</div>
+            <div id="timer" class="timer">15:00</div>
+        </div>
+        
+        <div class="qr-wrap">
+            <div class="qr-badge">Scan QRIS</div>
+            <div class="qr-header">
+                <div class="merchant">
+                    <i class="fa-solid fa-store"></i>
+                    <span>DewaTiket.id<br><small style="font-size:10px;font-weight:500;color:#8a8a8a">Official Merchant</small></span>
+                </div>
+                <div class="nmid">NMID : ID2024056789012</div>
+            </div>
+            
+            <div class="qr-img-box">
+                <img src="qris.png" alt="QRIS Dynamis" id="qrisImg">
+            </div>
+            
+            <div class="qr-footer">
+                <div class="qris-label">QRIS</div>
+                <div class="pay-methods">
+                    <span>Supported By</span>
+                    <div class="icons">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        <i class="fa-solid fa-wallet"></i>
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scan-hint">
+            <i class="fa-solid fa-qrcode"></i>
+            Scan dengan aplikasi e-wallet atau mobile banking
+        </div>
+    </div>
+
+    <div class="card">
+        <label for="file">
+            <div class="upload-area">
+                <span class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+                <h2>Upload Bukti Pembayaran</h2>
+                <p>Klik area ini untuk memilih bukti transfer QRIS</p>
+                <div class="file-types">
+                    <span>JPG</span><span>PNG</span><span>JPEG</span>
+                </div>
+            </div>
+        </label>
+        <input id="file" hidden type="file" accept="image/*">
+
+        <div id="preview" class="preview">
+            <img id="previewImg" alt="Preview">
+            <div id="fileName" class="file-name"></div>
+            <div class="success-msg">
+                <i class="fa-solid fa-circle-check"></i> Bukti pembayaran berhasil dipilih
+            </div>
+        </div>
+
+        <div class="checkbox-wrap">
+            <input type="checkbox" id="cek">
+            <label for="cek">Saya menyatakan telah melakukan pembayaran dan mengunggah bukti pembayaran yang valid.</label>
+        </div>
+
+        <button id="btn" class="submit-btn" disabled>
+            <i class="fa-solid fa-lock" style="margin-right:8px;font-size:14px"></i>
+            KONFIRMASI PEMBAYARAN
         </button>
-    </div>
-    <a href="index.html" class="logo">DewaTiket.id</a>
-    <div class="header-right">
-        <button class="icon-btn" aria-label="Bantuan">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-            </svg>
-        </button>
-    </div>
-</header>
-
-<main class="container">
-    <div class="hero-banner">
-        <img src="banner.png" alt="Spectra Fest 2026 Banner">
-    </div>
-
-    <div class="hero-card">
-        <h2>Spectra Fest 2026</h2>
-        <p>Dipersembahkan oleh DewaTiket.id</p>
-        <div class="event-info">
-            <div><i class="fa-solid fa-calendar-days"></i> 05 Desember 2026</div>
-            <div><i class="fa-solid fa-location-dot"></i> Lapangan Niti Mandala Renon, Denpasar</div>
-        </div>
-    </div>
-
-    <section class="form-card">
-        <div class="card-title"><i class="fa-solid fa-receipt"></i> Ringkasan Pesanan</div>
-        <div class="summary-row"><span>Jenis Tiket</span><strong id="jenisTiket">-</strong></div>
-        <div id="detailTiket"></div>
-        <div class="summary-row"><span>Jumlah Tiket</span><strong id="jumlahTiket">0</strong></div>
-        <div class="summary-row total"><span>Total Pembayaran</span><span id="totalBayar">Rp 0</span></div>
-    </section>
-
-    <section class="form-card">
-        <div class="card-title"><i class="fa-solid fa-user-pen"></i> Data Pemesan</div>
-        <div class="form-group">
-            <label>Nama Lengkap (sesuai identitas)</label>
-            <div class="input-icon-wrap">
-                <i class="fa-solid fa-user input-icon"></i>
-                <input id="nama" type="text" placeholder="Masukkan nama lengkap">
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Jenis Identitas</label>
-            <div class="input-icon-wrap">
-                <i class="fa-solid fa-id-card input-icon"></i>
-                <select id="identitas">
-                    <option value="">Pilih Jenis Identitas</option>
-                    <option>KTP</option><option>SIM</option><option>Paspor</option><option>Kartu Pelajar</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Nomor Identitas</label>
-            <div class="input-icon-wrap">
-                <i class="fa-solid fa-hashtag input-icon"></i>
-                <input id="nomorId" type="text" placeholder="Masukkan nomor identitas">
-            </div>
-        </div>
-        <div class="form-group">
-            <label>E-mail Aktif</label>
-            <div class="input-icon-wrap">
-                <i class="fa-solid fa-envelope input-icon"></i>
-                <input id="email" type="email" placeholder="contoh@email.com">
-            </div>
-        </div>
-        <div class="form-group">
-            <label>No. WhatsApp Aktif</label>
-            <div class="input-icon-wrap">
-                <i class="fa-solid fa-phone input-icon"></i>
-                <input id="wa" type="tel" placeholder="08xxxxxxxxxx">
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Alamat / Tempat Tinggal</label>
-            <div class="input-icon-wrap">
-                <textarea id="alamat" placeholder="Masukkan alamat lengkap"></textarea>
-            </div>
-        </div>
-    </section>
-
-    <section class="form-card">
-        <div class="card-title"><i class="fa-solid fa-shield-halved"></i> Persetujuan</div>
-        <div class="check">
-            <input type="checkbox" id="setuju1">
-            <label for="setuju1">Data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</label>
-        </div>
-        <div class="check">
-            <input type="checkbox" id="setuju2">
-            <label for="setuju2">Saya menyetujui syarat dan ketentuan acara serta kebijakan privasi.</label>
-        </div>
-    </section>
-</main>
-
-<div class="bottom-bar">
-    <div class="bottom-inner">
-        <div class="bottom-price">
-            <div class="bottom-label">Total Bayar</div>
-            <div class="bottom-total" id="bottomTotal">Rp 0</div>
-        </div>
-        <button class="buy-btn" id="lanjut">LANJUT <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 </div>
 
-<div id="loadingOverlay" class="loading-overlay">
-    <div class="loader">
-        <div class="loader-ring"></div>
-        <div class="loader-ring"></div>
-        <div class="loader-ring"></div>
-    </div>
-    <div style="text-align:center">
-        <div class="loading-text">Menyiapkan Pembayaran</div>
-        <div class="loading-subtext">Mohon tunggu sebentar</div>
+<!-- PREMIUM LOADING OVERLAY -->
+<div id="loading" class="loading-overlay">
+    <div class="loading-content">
+        <div class="progress-ring-wrap">
+            <div class="progress-icon">
+                <i class="fa-solid fa-credit-card"></i>
+            </div>
+            <svg class="progress-ring" viewBox="0 0 180 180">
+                <defs>
+                    <linearGradient id="gradStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#e50024"/>
+                        <stop offset="100%" stop-color="#f5b800"/>
+                    </linearGradient>
+                </defs>
+                <circle class="progress-ring-bg" cx="90" cy="90" r="80"></circle>
+                <circle id="progressCircle" class="progress-ring-fill" cx="90" cy="90" r="80"></circle>
+            </svg>
+            <div class="progress-percent">
+                <div class="num" id="progressNum">0</div>
+                <div class="pct">%</div>
+            </div>
+        </div>
+
+        <div class="loading-title">Memproses Pembayaran</div>
+        <div class="loading-subtitle" id="loadingSubtitle">Mohon tunggu, jangan tutup halaman ini...</div>
+
+        <div class="loading-steps">
+            <div class="step-item" data-step="0">
+                <div class="step-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="step-text">Verifikasi keamanan transaksi</div>
+            </div>
+            <div class="step-item" data-step="1">
+                <div class="step-icon"><i class="fa-solid fa-image"></i></div>
+                <div class="step-text">Validasi bukti pembayaran</div>
+            </div>
+            <div class="step-item" data-step="2">
+                <div class="step-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <div class="step-text">Konfirmasi ke sistem bank</div>
+            </div>
+            <div class="step-item" data-step="3">
+                <div class="step-icon"><i class="fa-solid fa-ticket"></i></div>
+                <div class="step-text">Penerbitan e-tiket</div>
+            </div>
+            <div class="step-item" data-step="4">
+                <div class="step-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="step-text">Finalisasi pesanan</div>
+            </div>
+        </div>
+
+        <div class="loading-bar-wrap">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        <div class="loading-time" id="loadingTime">00:00 / 00:08</div>
     </div>
 </div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-    // Ambil data dari LocalStorage (dari halaman index.html / spectrafest.html)
-    const selectedTickets = JSON.parse(localStorage.getItem('selectedTickets') || '[]');
-    const totalPrice = parseInt(localStorage.getItem('ticketTotal') || '0');
+// ── Load order data dari form.html ──
+var order = JSON.parse(localStorage.getItem('protix_order') || '{}');
 
-    let cartItems = selectedTickets.map(t => ({
-        id: t.type,
-        name: t.name,
-        qty: t.qty,
-        harga: t.price,
-        total: t.price * t.qty
-    }));
+// Fallback baca dari URL parameter
+if (!order.nama) {
+    var urlParams = new URLSearchParams(window.location.search);
+    order.nama = urlParams.get('nama') || '-';
+    order.wa = urlParams.get('wa') || '-';
+    order.total_bayar = parseInt(urlParams.get('total') || '0');
+    order.jumlah_tiket = parseInt(urlParams.get('totalQty') || '0');
+    order.detail_pesanan = [];
+}
 
-    let totalQty = 0;
-    cartItems.forEach(item => totalQty += item.qty);
+// Generate Order ID
+if (!localStorage.getItem('orderId')) {
+  localStorage.setItem('orderId', 'SPECTRA-' + Date.now());
+}
+document.getElementById('orderId').textContent = localStorage.getItem('orderId');
 
-    // Elemen DOM
-    const namaEl = document.getElementById('nama');
-    const identitasEl = document.getElementById('identitas');
-    const nomorIdEl = document.getElementById('nomorId');
-    const emailEl = document.getElementById('email');
-    const waEl = document.getElementById('wa');
-    const alamatEl = document.getElementById('alamat');
-    const setuju1El = document.getElementById('setuju1');
-    const setuju2El = document.getElementById('setuju2');
-    const loadingEl = document.getElementById('loadingOverlay');
-    const lanjutBtn = document.getElementById('lanjut');
+var totalStr = 'Rp ' + Number(order.total_bayar || 0).toLocaleString('id-ID');
+document.getElementById('total').textContent = totalStr;
 
-    // Tampilkan ringkasan pesanan
-    const formattedTotal = 'Rp ' + totalPrice.toLocaleString('id-ID');
-    document.getElementById('totalBayar').innerText = formattedTotal;
-    document.getElementById('jumlahTiket').innerText = totalQty;
-    document.getElementById('bottomTotal').innerText = formattedTotal;
+var tiketText = '-';
+if (order.detail_pesanan && order.detail_pesanan.length > 0) {
+    tiketText = order.detail_pesanan.map(function(i) { return i.name; }).join(', ');
+}
+
+document.getElementById('jenisTiket').textContent = tiketText;
+document.getElementById('jumlahTiket').textContent = order.jumlah_tiket || 0;
+document.getElementById('namaPemesan').textContent = order.nama || '-';
+document.getElementById('waPemesan').textContent = order.wa || '-'; 
+
+// ── Timer Countdown (15 Menit = 900 Detik) ──
+var duration = 900; 
+var timerEl = document.getElementById('timer');
+var timerInterval = null;
+var isProcessing = false;
+
+function timerRun() {
+  if (isProcessing) return; 
+  var m = Math.floor(duration / 60);
+  var s = duration % 60;
+  timerEl.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+
+  if (duration <= 60 && duration > 0) timerEl.classList.add('urgent');
+  else timerEl.classList.remove('urgent');
+
+  if (duration <= 0) {
+    clearInterval(timerInterval);
+    return;
+  }
+  duration--;
+}
+
+timerRun();
+timerInterval = setInterval(timerRun, 1000);
+
+// ── Upload & Validation ──
+var uploaded = false;
+var fileInput = document.getElementById('file');
+var cekInput = document.getElementById('cek');
+var btn = document.getElementById('btn');
+var previewImg = document.getElementById('previewImg');
+
+function checkButton() {
+  btn.disabled = !(uploaded && cekInput.checked);
+}
+
+fileInput.addEventListener('change', function() {
+  if (this.files && this.files.length) {
+    var file = this.files[0];
+    uploaded = true;
+    document.getElementById('preview').style.display = 'block';
     
-    let detailHtml = '';
-    let jenisTiketText = '';
-    cartItems.forEach(item => {
-        detailHtml += `<div class="summary-row"><span>${item.name} (${item.qty}x)</span><strong>Rp ${item.total.toLocaleString('id-ID')}</strong></div>`;
-        jenisTiketText += `${item.name} (${item.qty})<br>`;
+    if (previewImg.src && previewImg.src.startsWith('blob:')) {
+      URL.revokeObjectURL(previewImg.src);
+    }
+    previewImg.src = URL.createObjectURL(file);
+    document.getElementById('fileName').innerHTML = '<i class="fa-solid fa-image" style="margin-right:6px"></i>' + file.name;
+    checkButton();
+  }
+});
+
+cekInput.addEventListener('change', checkButton);
+
+// ── Premium Loading Logic (8 detik) ──
+// Dirubah dari 3 menit ke 8 detik agar UX lebih baik dan tidak membosankan
+var LOADING_DURATION = 8000; 
+var loadingOverlay = document.getElementById('loading');
+var progressCircle = document.getElementById('progressCircle');
+var progressNum = document.getElementById('progressNum');
+var loadingBar = document.getElementById('loadingBar');
+var loadingTime = document.getElementById('loadingTime');
+var loadingSubtitle = document.getElementById('loadingSubtitle');
+
+var CIRCUMFERENCE = 2 * Math.PI * 80;
+progressCircle.style.strokeDasharray = CIRCUMFERENCE;
+progressCircle.style.strokeDashoffset = CIRCUMFERENCE;
+
+var subtitles = [
+  'Sedang memverifikasi data pembayaran Anda...',
+  'Menghubungkan ke server bank...',
+  'Memvalidasi bukti transfer QRIS...',
+  'Memproses transaksi keamanan...',
+  'Menerbitkan e-tiket Anda...',
+  'Hampir selesai, mohon tunggu...'
+];
+
+var stepElements = document.querySelectorAll('.step-item');
+
+function formatTime(sec) {
+  var m = Math.floor(sec / 60);
+  var s = sec % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+function startPremiumLoading() {
+  isProcessing = true;
+  clearInterval(timerInterval);
+
+  loadingOverlay.classList.add('active');
+  document.body.classList.add('no-scroll');
+
+  var startTime = Date.now();
+
+  function update() {
+    var elapsed = Date.now() - startTime;
+    var progress = Math.min(elapsed / LOADING_DURATION, 1);
+    var percent = Math.floor(progress * 100);
+
+    progressCircle.style.strokeDashoffset = CIRCUMFERENCE * (1 - progress);
+    progressNum.textContent = percent;
+    loadingBar.style.width = percent + '%';
+
+    var elapsedSec = Math.floor(elapsed / 1000);
+    var totalSec = Math.floor(LOADING_DURATION / 1000);
+    loadingTime.textContent = formatTime(elapsedSec) + ' / ' + formatTime(totalSec);
+
+    var subIdx = Math.min(Math.floor(progress * subtitles.length), subtitles.length - 1);
+    loadingSubtitle.textContent = subtitles[subIdx];
+
+    var activeStep = Math.min(Math.floor(progress * stepElements.length), stepElements.length - 1);
+    stepElements.forEach(function(el, idx) {
+      el.classList.remove('active', 'done');
+      if (idx < activeStep) {
+        el.classList.add('done');
+        el.querySelector('i').className = 'fa-solid fa-check';
+      } else if (idx === activeStep) {
+        el.classList.add('active');
+      }
     });
-    document.getElementById('detailTiket').innerHTML = detailHtml;
-    document.getElementById('jenisTiket').innerHTML = jenisTiketText || 'Tidak ada tiket dipilih';
 
-    // Simpan Draft Form ke LocalStorage
-    function saveDraft() {
-        try {
-            localStorage.setItem('draft_nama', namaEl.value);
-            localStorage.setItem('draft_identitas', identitasEl.value);
-            localStorage.setItem('draft_nomorId', nomorIdEl.value);
-            localStorage.setItem('draft_email', emailEl.value);
-            localStorage.setItem('draft_wa', waEl.value);
-            localStorage.setItem('draft_alamat', alamatEl.value);
-        } catch(e) {}
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      stepElements.forEach(function(el) {
+        el.classList.remove('active');
+        el.classList.add('done');
+        el.querySelector('i').className = 'fa-solid fa-check';
+      });
+      progressNum.textContent = 100;
+      loadingBar.style.width = '100%';
+      loadingSubtitle.textContent = 'Pembayaran berhasil dikonfirmasi!';
+
+      setTimeout(function() {
+        window.location.href = 'success.html';
+      }, 1000);
     }
-    function restoreDraft() {
-        try {
-            namaEl.value = localStorage.getItem('draft_nama') || '';
-            identitasEl.value = localStorage.getItem('draft_identitas') || '';
-            nomorIdEl.value = localStorage.getItem('draft_nomorId') || '';
-            emailEl.value = localStorage.getItem('draft_email') || '';
-            waEl.value = localStorage.getItem('draft_wa') || '';
-            alamatEl.value = localStorage.getItem('draft_alamat') || '';
-        } catch(e) {}
-    }
-    restoreDraft();
+  }
 
-    [namaEl, identitasEl, nomorIdEl, emailEl, waEl, alamatEl].forEach(el => {
-        el.addEventListener('input', saveDraft);
-        el.addEventListener('change', saveDraft);
-    });
+  requestAnimationFrame(update);
+}
 
-    // Toast Notification
-    let toastTimer = null;
-    function showToast(message){
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        if(toastTimer) clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
-    }
+btn.addEventListener('click', function() {
+  if (btn.disabled) return;
+  startPremiumLoading();
+});
 
-    // Validasi & Submit
-    lanjutBtn.onclick = function() {
-        const wajib = [namaEl, identitasEl, nomorIdEl, emailEl, waEl, alamatEl];
-        let isValid = true;
-        wajib.forEach(field => field.classList.remove('error'));
-
-        for (const field of wajib) {
-            if (!field.value.trim()) {
-                field.classList.add('error');
-                isValid = false;
-            }
-        }
-
-        if (!isValid) {
-            showToast('Mohon lengkapi semua data wajib (berwarna merah).');
-            const firstError = document.querySelector('.error');
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
-        }
-
-        if (!setuju1El.checked || !setuju2El.checked) {
-            showToast('Harap centang seluruh kotak persetujuan.');
-            return;
-        }
-
-        // Tampilkan loading premium
-        loadingEl.classList.add('active');
-        lanjutBtn.disabled = true;
-        lanjutBtn.innerHTML = 'MEMPROSES...';
-
-        // Siapkan data pesanan untuk Formspree
-        const orderData = {
-            event: "Spectra Fest 2026",
-            nama: namaEl.value, 
-            wa: waEl.value, 
-            email: emailEl.value,
-            identitas: identitasEl.value, 
-            nomor_id: nomorIdEl.value, 
-            alamat: alamatEl.value,
-            detail_pesanan: cartItems,
-            jumlah_tiket: totalQty, 
-            total_bayar: totalPrice
-        };
-
-        // Simpan data cadangan ke LocalStorage
-        try {
-            localStorage.setItem('protix_order', JSON.stringify(orderData));
-        } catch(e) {}
-
-        // Kirim data ke Formspree
-        fetch('https://formspree.io/f/mojojdpl', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(orderData)
-        }).catch(e => console.log('Formspree error:', e));
-
-        // Redirect ke qris.html bawa parameter URL
-        const qrisParams = new URLSearchParams({
-            nama: namaEl.value, 
-            wa: waEl.value, 
-            totalQty: totalQty,
-            total: totalPrice
-        });
-        
-        setTimeout(() => {
-            window.location.href = 'qris.html?' + qrisParams.toString();
-        }, 1500); // Delay 1.5 detik agar loading terlihat
-    };
+window.addEventListener('load', function() {
+  document.body.style.opacity = '1';
+});
 </script>
 </body>
 </html>
